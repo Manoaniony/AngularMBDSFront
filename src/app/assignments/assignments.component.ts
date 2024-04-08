@@ -19,6 +19,7 @@ import { AddAssignmentComponent } from './add-assignment/add-assignment.componen
 import { AssignmentsService } from '../shared/assignments.service';
 import { RouterLink } from '@angular/router';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
+
 @Component({
   selector: 'app-assignments',
   standalone: true,
@@ -38,7 +39,7 @@ import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
     MatSliderModule,
     RenduDirective,
     AssignmentDetailComponent,
-    AddAssignmentComponent,
+    AddAssignmentComponent
   ],
 })
 export class AssignmentsComponent implements OnInit {
