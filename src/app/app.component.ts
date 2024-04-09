@@ -24,7 +24,7 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Application de gestion des assignments Application de gestion des assignments';
+  title = 'Application de gestion des assignments';
   opened = false;
   constructor(private authService: AuthService,
     private assignmentsService: AssignmentsService,
