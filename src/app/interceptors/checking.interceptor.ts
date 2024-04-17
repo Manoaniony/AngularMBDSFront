@@ -11,6 +11,7 @@ export class CheckingInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const authToken = 'YOUR_AUTH_TOKEN_HERE';
 
+    // verifier si l'url n'est pas login
     const authReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${authToken}`
