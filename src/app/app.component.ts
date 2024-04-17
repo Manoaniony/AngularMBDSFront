@@ -16,6 +16,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { Layouts } from './shared/layout.enum';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './app/register/register.component';
 
 
 @Component({
@@ -28,7 +29,8 @@ import { LoginComponent } from './login/login.component';
     MatListModule,
     AssignmentsComponent, MatSidenavModule, MatListModule, CommonModule,
     // Component
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
