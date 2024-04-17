@@ -6,7 +6,10 @@ import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assi
 import { authGuard } from './shared/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { Layouts } from './shared/layout.enum';
-import { RegisterComponent } from './app/register/register.component';
+import { RegisterComponent } from './register/register.component';
+import { ForbiddenComponent } from './pageError/forbidden/forbidden.component';
+import { InternalServerComponent } from './pageError/internal-server/internal-server.component';
+import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,5 +30,20 @@ export const routes: Routes = [
     path: "register",
     component: RegisterComponent,
     data: { layout: Layouts.Register },
+  },
+  {
+    path: "forbidden",
+    component: ForbiddenComponent,
+    data: { layout: Layouts.Forbidden },
+  },
+  {
+    path: "internal-server",
+    component: InternalServerComponent,
+    data: { layout: Layouts.InternalServer },
+  },
+  {
+    path: "unauthorized",
+    component: UnauthorizedComponent,
+    data: { layout: Layouts.Unauthorized },
   }
 ];

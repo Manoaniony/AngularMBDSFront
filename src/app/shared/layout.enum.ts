@@ -1,5 +1,8 @@
 export enum Layouts {
     Login,
     Register,
-    Assignments
+    Assignments,
+    Forbidden,
+    InternalServer,
+    Unauthorized
 }

@@ -16,21 +16,36 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { Layouts } from './shared/layout.enum';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './app/register/register.component';
+import { RegisterComponent } from './register/register.component';
+import { ForbiddenComponent } from './pageError/forbidden/forbidden.component';
+import { InternalServerComponent } from './pageError/internal-server/internal-server.component';
+import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
-    MatIconModule, MatSlideToggleModule,
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatSlideToggleModule,
     MatToolbarModule,
-    AssignmentsComponent, MatSidenavModule, MatListModule, SidenavComponent, ToolbarComponent,
-    MatListModule,
-    AssignmentsComponent, MatSidenavModule, MatListModule, CommonModule,
+    AssignmentsComponent, 
+    MatSidenavModule, 
+    MatListModule, 
+    SidenavComponent, 
+    ToolbarComponent,
+    CommonModule,
+    CommonModule,
     // Component
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForbiddenComponent,
+    InternalServerComponent,
+    UnauthorizedComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
