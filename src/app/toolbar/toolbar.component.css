@@ -1,0 +1,17 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.app-title {
+    margin-left: 6px;
+    text-decoration: none;
+    color: white;
+}
+
+.mat-toolbar-single-row {
+    padding: 0 16px 0 4px;
+}
+
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+    top: 64px !important;
+}

@@ -1,5 +1,5 @@
 
-<mat-toolbar color="primary">
+<!--mat-toolbar color="primary">
   <mat-toolbar-row>
     <button mat-button (click)="opened =! opened"><mat-icon>menu</mat-icon></button>
     <button mat-button><mat-icon>home</mat-icon>Home</button>
@@ -22,8 +22,24 @@
     
     <router-outlet></router-outlet>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container-->
 <!--
 <app-assignments></app-assignments>
 -->
+<div class="container">
+  <app-toolbar class="toolbar" (open)="open()"></app-toolbar>
+  <mat-drawer-container>
+      <mat-drawer class="sidenav-container" mode="side" [opened]="opened" >
+          <app-sidenav></app-sidenav>
+      </mat-drawer>
+      <mat-drawer-content>
+          <div class="content">
+            <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
+            <button mat-button (click)="genererDonneesDeTest()">Peupler BD</button>
+            <router-outlet></router-outlet>
+          </div>
+      </mat-drawer-content>
+  </mat-drawer-container>
+</div>
+
 

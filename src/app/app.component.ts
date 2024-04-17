@@ -11,6 +11,8 @@ import { AssignmentsService } from './shared/assignments.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 
 @Component({
@@ -19,13 +21,18 @@ import { MatListModule } from '@angular/material/list';
   imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
             MatIconModule, MatSlideToggleModule,
     MatToolbarModule,
-    AssignmentsComponent,MatSidenavModule,MatListModule],
+    AssignmentsComponent,MatSidenavModule,MatListModule,SidenavComponent,ToolbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Application de gestion des assignments';
+  //title = 'Application de gestion des assignments';
   opened = false;
+
+  open() {
+    this.opened = !this.opened;
+  }
+
   constructor(private authService:AuthService,
               private assignmentsService: AssignmentsService,
               private router:Router) {}
