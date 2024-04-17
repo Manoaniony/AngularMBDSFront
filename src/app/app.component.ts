@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, RoutesRecognized } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { Layouts } from './shared/layout.enum';
+import { CommonModule } from '@angular/common';
+import { LoginComponent } from './login/login.component';
 
 
 @Component({
@@ -22,13 +25,22 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatIconModule, MatSlideToggleModule,
     MatToolbarModule,
     AssignmentsComponent, MatSidenavModule, MatListModule, SidenavComponent, ToolbarComponent,
-    MatListModule],
+    MatListModule,
+    AssignmentsComponent, MatSidenavModule, MatListModule, CommonModule,
+    // Component
+    LoginComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
+
 export class AppComponent {
   title = 'Application de gestion des assignments';
   opened = false;
+  Layouts = Layouts;
+  layout: Layouts | undefined;
+
   constructor(private authService: AuthService,
     private assignmentsService: AssignmentsService,
     private router: Router) { }
@@ -59,5 +71,14 @@ export class AppComponent {
         // On devrait pouvoir le faire avec le router, jussqu'à la version 16 ça fonctionnait avec
         // this.router.navigate(['/home'], {replaceUrl:true});
       });
+  }
+
+  ngOnInit() {
+    this.router.events.subscribe((data) => {
+      if (data instanceof RoutesRecognized) {
+        this.layout = data?.state?.root?.firstChild?.data['layout']
+      }
+      console.log('layout', this.layout);
+    });
   }
 }
