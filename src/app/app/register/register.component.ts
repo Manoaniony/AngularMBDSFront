@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
+import { User } from '../../models/user/user';
 
 @Component({
   selector: 'app-register',
@@ -130,18 +131,17 @@ export class RegisterComponent {
       lastName,
       firstName,
       email,
-      password,
-      confirmPassword
+      password
     } = this.registerForm?.value;
 
     if (this.registerForm?.valid) {
-      console.log({
+      const userToCreate: User = {
         lastName,
         firstName,
         email,
-        password,
-        confirmPassword
-      });
+        password
+      }
+      console.log("userToCreate ", userToCreate);
     }
     else {
       console.log("Form not invalid");
