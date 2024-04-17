@@ -2,6 +2,9 @@
   <!-- Alternativerly use the main layout as the default switch case -->
   <app-login *ngSwitchCase="Layouts.Login"></app-login>
   <app-register *ngSwitchCase="Layouts.Register"></app-register>
+  <app-forbidden *ngSwitchCase="Layouts.Forbidden"></app-forbidden>
+  <app-internal-server *ngSwitchCase="Layouts.InternalServer"></app-internal-server>
+  <app-unauthorized *ngSwitchCase="Layouts.Unauthorized"></app-unauthorized>
   <ng-container *ngSwitchDefault>
     <mat-toolbar color="primary">
       <mat-toolbar-row>

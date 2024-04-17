@@ -28,5 +28,9 @@
                 </form>
             </mat-card-content>
         </mat-card>
+        <button (click)="callApiInternalServer()" mat-raised-button color="primary" ripple>InternalServer</button>
+        <button (click)="callApiForbiden()" mat-raised-button color="primary" ripple>Forbidden</button>
+        <button (click)="callApiUnauthorized()" mat-raised-button color="primary" ripple>Unauthorized</button>
+        <button (click)="callApiOk()" mat-raised-button color="primary" ripple>OK</button>
     </div>
 </div>
