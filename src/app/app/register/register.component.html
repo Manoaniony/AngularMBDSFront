@@ -10,35 +10,14 @@
                         <mat-label>Nom</mat-label>
                         <input matInput placeholder="John" formControlName="lastName" required type="text" />
                         <mat-error *ngIf="registerForm.get('lastName')?.invalid">
-                            {{ getEmailErrorMessage()}}
+                            {{ getLastNameErrorMessage()}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Prénoms</mat-label>
                         <input matInput placeholder="Doe" formControlName="firstName" required type="text" />
                         <mat-error *ngIf="registerForm.get('firstName')?.invalid">
-                            {{ getEmailErrorMessage()}}
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Adresse</mat-label>
-                        <input matInput placeholder="Adresse" formControlName="address" required type="text" />
-                        <mat-error *ngIf="registerForm.get('address')?.invalid">
-                            {{ getEmailErrorMessage()}}
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Numero de telephone</mat-label>
-                        <input matInput placeholder="+2613234565" formControlName="phoneNumber" required type="text" />
-                        <mat-error *ngIf="registerForm.get('address')?.invalid">
-                            {{ getEmailErrorMessage()}}
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>CIN</mat-label>
-                        <input matInput placeholder="1234567890" formControlName="cin" required type="text" />
-                        <mat-error *ngIf="registerForm.get('cin')?.invalid">
-                            {{ getEmailErrorMessage()}}
+                            {{ getFirstNameErrorMessage()}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
@@ -61,10 +40,11 @@
                         <input matInput placeholder="Confirmation mot de passe" formControlName="confirmPassword"
                             required type="password" />
                         <mat-error *ngIf="registerForm.get('password')?.invalid">
-                            {{ getPasswordErrorMessage() }}
+                            {{ getConfirmPasswordErrorMessage() }}
                         </mat-error>
                     </mat-form-field>
-                    <button mat-raised-button color="primary" ripple>S'inscrire</button>
+                    <button [disabled]="!registerForm.valid" mat-raised-button color="primary"
+                        ripple>S'inscrire</button>
                     <div class="mt-3">
                         <a mat-button routerLink="/login">Vous avez déjà un compte ?</a>
                     </div>
