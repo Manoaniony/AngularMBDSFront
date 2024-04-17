@@ -6,6 +6,7 @@ import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assi
 import { authGuard } from './shared/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { Layouts } from './shared/layout.enum';
+import { RegisterComponent } from './app/register/register.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,5 +22,10 @@ export const routes: Routes = [
     path: "login",
     component: LoginComponent,
     data: { layout: Layouts.Login },
+  },
+  {
+    path: "register",
+    component: RegisterComponent,
+    data: { layout: Layouts.Register },
   }
 ];

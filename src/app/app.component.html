@@ -1,6 +1,7 @@
 <ng-container [ngSwitch]="layout">
   <!-- Alternativerly use the main layout as the default switch case -->
   <app-login *ngSwitchCase="Layouts.Login"></app-login>
+  <app-register *ngSwitchCase="Layouts.Register"></app-register>
   <ng-container *ngSwitchDefault>
     <mat-toolbar color="primary">
       <mat-toolbar-row>
