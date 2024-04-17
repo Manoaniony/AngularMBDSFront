@@ -37,9 +37,6 @@ export class RegisterComponent {
     this.registerForm = formBuilder.group({
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
-      address: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      cin: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required, Validators.minLength(8)],
       confirmPassword: ['', Validators.required, Validators.minLength(8)],
@@ -50,9 +47,6 @@ export class RegisterComponent {
     this.registerForm = new FormGroup({
       lastName: new FormControl('Razafindrakoto', [Validators.required]),
       firstName: new FormControl('Manolotsoa', [Validators.required]),
-      address: new FormControl('Lot II A B 22', [Validators.required]),
-      phoneNumber: new FormControl('+261324001027', [Validators.required]),
-      cin: new FormControl('102031023548', [Validators.required]),
       email: new FormControl('manolotsoadaniel@gmail.com', [Validators.required, Validators.email]),
       password: new FormControl('itu1506!', [
         Validators.required,
@@ -84,33 +78,6 @@ export class RegisterComponent {
       : '';
   }
 
-  getAddressErrorMessage() {
-    if (this.registerForm.get('address')?.touched && this.registerForm.get('address')?.hasError('required')) {
-      return 'Vous devez entrer votre adresse';
-    }
-    return this.registerForm.get('address')?.hasError('address')
-      ? 'Vous devez entrer une adresse valide'
-      : '';
-  }
-
-  getPhoneNumberErrorMessage() {
-    if (this.registerForm.get('phoneNumber')?.touched && this.registerForm.get('phoneNumber')?.hasError('required')) {
-      return 'Vous devez entrer votre numéro téléphone';
-    }
-    return this.registerForm.get('phoneNumber')?.hasError('phoneNumber')
-      ? 'Vous devez entrer un numéro téléphone valide'
-      : '';
-  }
-
-  getCinErrorMessage() {
-    if (this.registerForm.get('cin')?.touched && this.registerForm.get('cin')?.hasError('required')) {
-      return 'Vous devez entrer votre CIN';
-    }
-    return this.registerForm.get('cin')?.hasError('cin')
-      ? 'Vous devez entrer un numéro CIN valide'
-      : '';
-  }
-
   getEmailErrorMessage() {
     if (this.registerForm.get('email')?.touched && this.registerForm.get('email')?.hasError('required')) {
       return 'Vous devez entrer votre email';
@@ -121,8 +88,11 @@ export class RegisterComponent {
   }
 
   getPasswordErrorMessage() {
-    if (this.registerForm.get('password')?.touched && this.registerForm.get('password')?.hasError('required')) {
+    if (this.registerForm.get('password')?.hasError('required')) {
       return 'Vous devez entrer votre mot de passe';
+    }
+    else if (this.registerForm.get('password')?.hasError('minlength')) {
+      return 'Le mot de passe doit etre au moin 8 caracteres';
     }
     return this.registerForm.get('password')?.hasError('password')
       ? 'Vous devez entrer un mot de passe valide'
@@ -155,5 +125,28 @@ export class RegisterComponent {
     });
   }
 
-  onSubmit() { }
+  onSubmit() {
+    const {
+      lastName,
+      firstName,
+      email,
+      password,
+      confirmPassword
+    } = this.registerForm?.value;
+
+    if (this.registerForm?.valid) {
+      console.log({
+        lastName,
+        firstName,
+        email,
+        password,
+        confirmPassword
+      });
+    }
+    else {
+      console.log("Form not invalid");
+    }
+
+
+  }
 }
