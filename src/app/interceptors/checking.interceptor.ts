@@ -2,21 +2,21 @@ import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from "@a
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
+import { LocalService } from "../services/local.service";
 
 @Injectable()
 export class CheckingInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private localService: LocalService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const authToken = 'YOUR_AUTH_TOKEN_HERE';
-
-    // verifier si l'url n'est pas login
-    const authReq = req.clone({
+    const authToken = this.localService.getData("accessToken");
+    // verifier si accessToken exist ? on l'ajoute dans la requete
+    const authReq = authToken ? req.clone({
       setHeaders: {
         Authorization: `Bearer ${authToken}`
       }
-    });
+    }) : req;
 
     return next.handle(authReq).pipe(
       catchError((err: any) => {
@@ -40,7 +40,7 @@ export class CheckingInterceptor implements HttpInterceptor {
         } else {
           console.error('An error occurred:', err);
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }

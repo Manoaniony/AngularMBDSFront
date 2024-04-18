@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
+import { LocalService } from '../services/local.service';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private localService: LocalService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -94,6 +96,7 @@ export class LoginComponent {
     this.http.post('http://localhost:8010/api/ok', undefined).subscribe({
       next: (data) => {
         console.log('Received data:', data);
+        this.localService.saveData("accessToken", "TOKEN_ACCESS");
       },
       error: (error) => {
         console.log('Error data:', error);
