@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { Router, RouterOutlet, RoutesRecognized } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,7 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { ForbiddenComponent } from './pageError/forbidden/forbidden.component';
 import { InternalServerComponent } from './pageError/internal-server/internal-server.component';
 import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.component';
-
+import { UserModule } from './user/user.module';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +40,8 @@ import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.com
     RegisterComponent,
     ForbiddenComponent,
     InternalServerComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    UserModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -53,7 +54,8 @@ export class AppComponent {
   Layouts = Layouts;
   layout: Layouts | undefined;
 
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AuthService,
     private assignmentsService: AssignmentsService,
     private router: Router) { }
 

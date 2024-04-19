@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { User } from '../models/user/user';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-register',
@@ -33,6 +34,7 @@ export class RegisterComponent {
   constructor(
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
+    private userService: UserService
 
   ) {
     this.registerForm = formBuilder.group({

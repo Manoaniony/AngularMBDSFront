@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-unauthorized',
@@ -8,5 +9,15 @@ import { Component } from '@angular/core';
   styleUrl: './unauthorized.component.css'
 })
 export class UnauthorizedComponent {
+
+  constructor(
+    private userService: UserService
+  ) {
+
+  }
+
+  ngOnInit() {
+    console.log("User in the userService ", this.userService.currentUser);
+  }
 
 }

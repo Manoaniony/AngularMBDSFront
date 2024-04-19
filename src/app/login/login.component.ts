@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +8,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { LocalService } from '../services/local/local.service';
+import { UserService } from '../services/user/user.service';
+import { User } from '../models/user/user';
+import { environment } from '../../environments/environment.development';
+import { AuthService } from '../services/auth/auth.service';
+import { ResponseLoginTypes } from '../shared/types/login';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -29,17 +35,23 @@ export class LoginComponent {
   loading: boolean = false;
   submitted: boolean = false;
   loginForm: FormGroup;
-
+  userConnected: User | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private localService: LocalService
+    private localService: LocalService,
+    private userService: UserService,
+    private authService: AuthService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+  }
+
+  ngOnInit() {
+    this.userConnected = this.userService.getCurrentUser()?.value
   }
 
   getEmailErrorMessage() {
@@ -93,10 +105,17 @@ export class LoginComponent {
     })
   }
   callApiOk() {
-    this.http.post('http://localhost:8010/api/ok', undefined).subscribe({
-      next: (data) => {
-        console.log('Received data:', data);
-        this.localService.saveData("accessToken", "TOKEN_ACCESS");
+    this.authService.login(`${environment}/api/auth`, { email: "manolotsoadaniel@gmail.com", password: "12345678" }).subscribe({
+      next: (response: ResponseLoginTypes) => {
+        const { email, firstName, lastName, role } = response.data;
+        console.log('Received data:', response);
+        this.userService.setCurrentUser({
+          email,
+          firstName,
+          lastName,
+          role
+        });
+        this.localService.saveData("accessToken", response?.data?.token);
       },
       error: (error) => {
         console.log('Error data:', error);
