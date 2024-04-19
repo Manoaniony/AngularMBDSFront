@@ -13,11 +13,11 @@ export class AuthService {
     private http: HttpClient,
   ) { }
 
-  login(args: ArgsLoginTypes): Observable<any> {
+  login(url: string, args: ArgsLoginTypes): Observable<any> {
     return this.http.post(`${environment?.apiUrl}/auth`, args);
   }
 
-  me(args: ArgsMeTypes): Observable<any> {
-    return this.http.post(`${environment?.apiUrl}/me`, args);
+  me(): Observable<any> {
+    return this.http.post(`${environment?.apiUrl}/me`, undefined);
   }
 }
