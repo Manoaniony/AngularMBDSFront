@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +36,6 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
     private localService: LocalService,
     private userService: UserService,
     private authService: AuthService,
