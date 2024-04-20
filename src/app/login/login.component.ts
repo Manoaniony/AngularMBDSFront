@@ -51,7 +51,9 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    this.userConnected = this.userService.getCurrentUser()?.value
+    this.userService.getCurrentUser()?.subscribe((user: any) => {
+      this.userConnected = user;
+    })
   }
 
   getEmailErrorMessage() {
@@ -105,6 +107,7 @@ export class LoginComponent {
     })
   }
   callApiOk() {
+    console.log("USER CONNECTED ", this.userConnected);
     this.authService.login(`${environment}/api/auth`, { email: "manolotsoadaniel@gmail.com", password: "12345678" }).subscribe({
       next: (response: ResponseLoginTypes) => {
         const { email, firstName, lastName, role } = response.data;

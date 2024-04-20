@@ -34,8 +34,10 @@
             <button (click)="callApiUnauthorized()" mat-raised-button color="primary" ripple>Unauthorized</button>
             <button (click)="callApiOk()" mat-raised-button color="primary" ripple>OK</button>
         </div>
-        <div>
-            {{userConnected?.email}} is connected!
-        </div>
+        <ng-container *ngIf="userConnected">
+            <div>
+                {{userConnected.email}} is connected!
+            </div>
+        </ng-container>
     </div>
 </div>

@@ -19,14 +19,10 @@ export class UserService {
     if (!this.currentUser) {
       this.authService.me().subscribe({
         next: (response: any) => {
-          console.log("RESPONSE IN SERVICE ", response);
-
-          this.currentUser?.next(response.data);
+          this.setCurrentUser(response.data)
         },
       })
     }
-    console.log("this currentUser ", this.currentUser);
-
   }
 
   public getCurrentUser(): BehaviorSubject<User | undefined> | undefined {
