@@ -34,10 +34,9 @@ export class RegisterComponent {
   constructor(
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private userService: UserService
 
   ) {
-    this.registerForm = formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -121,9 +120,9 @@ export class RegisterComponent {
 
   openSnackBar(message: string, action: string, error?: boolean) {
     this._snackBar.open(message, action, {
-      duration: 2000,
+      duration: 36000000,
       verticalPosition: 'top',
-      panelClass: ['bg-error'],
+      panelClass: ["success-snackbar"],
       horizontalPosition: 'right'
     });
   }
@@ -144,6 +143,7 @@ export class RegisterComponent {
         password
       }
       console.log("userToCreate ", userToCreate);
+      this.openSnackBar("Compte créé avec succes", "ok")
     }
     else {
       console.log("Form not invalid");
