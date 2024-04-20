@@ -1,16 +1,17 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
-import { UserService } from '../services/user/user.service';
-import { AuthService } from '../services/auth/auth.service';
+import { CanActivateFn, Router } from '@angular/router';
 import { LocalService } from '../services/local/local.service';
-import { jwtDecode } from 'jwt-decode';
 import { JwtService } from '../services/jwt/jwt.service';
-import { of, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 
 export const authenticationGuard: CanActivateFn = (route, state) => {
   // injection du service d'authentification
-  const localService = inject(LocalService);
+  const router = inject(Router);
   const jwtService = inject(JwtService);
-  return jwtService.isValid();
+  return jwtService.isValid().pipe((tap(response => {
+    if (!response) {
+      router.navigate(['/login']);
+    }
+  })));
 };
