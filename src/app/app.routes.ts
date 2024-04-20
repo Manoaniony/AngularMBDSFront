@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import { ForbiddenComponent } from './pageError/forbidden/forbidden.component';
 import { InternalServerComponent } from './pageError/internal-server/internal-server.component';
 import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.component';
+import { authenticationGuard } from './shared/authentication.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const routes: Routes = [
     path: "login",
     component: LoginComponent,
     data: { layout: Layouts.Login },
+    canActivate: [authenticationGuard]
   },
   {
     path: "register",
