@@ -19,6 +19,8 @@ import { ForbiddenComponent } from './pageError/forbidden/forbidden.component';
 import { InternalServerComponent } from './pageError/internal-server/internal-server.component';
 import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.component';
 import { UserModule } from './user/user.module';
+import { User } from './models/user/user';
+import { UserService } from './services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -53,8 +55,10 @@ export class AppComponent {
   opened = false;
   Layouts = Layouts;
   layout: Layouts | undefined;
+  userConnected: User | undefined;
 
   constructor(
+    private userService: UserService,
     private authService: AuthService,
     private assignmentsService: AssignmentsService,
     private router: Router) { }
@@ -94,5 +98,19 @@ export class AppComponent {
       }
       console.log('layout', this.layout);
     });
+    this.userService.getCurrentUser()?.subscribe((user: any) => {
+      this.userConnected = user;
+    })
+  }
+
+  callLogout() {
+    this.userService.logout()
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.router.navigate(['/login'])
+          }
+        }
+      });
   }
 }
