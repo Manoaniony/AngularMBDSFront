@@ -10,10 +10,8 @@ import { Router, RouterLink } from '@angular/router';
 import { LocalService } from '../services/local/local.service';
 import { UserService } from '../services/user/user.service';
 import { User } from '../models/user/user';
-import { environment } from '../../environments/environment.development';
 import { AuthService } from '../services/auth/auth.service';
 import { ResponseLoginTypes } from '../shared/types/login';
-import { Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
