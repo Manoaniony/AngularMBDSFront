@@ -11,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
-
 import { RenduDirective } from '../shared/rendu.directive';
 import { Assignment } from './assignment.model';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
@@ -19,6 +18,7 @@ import { AddAssignmentComponent } from './add-assignment/add-assignment.componen
 import { AssignmentsService } from '../shared/assignments.service';
 import { RouterLink } from '@angular/router';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
+import { User } from '../models/user/user';
 
 @Component({
   selector: 'app-assignments',
@@ -63,8 +63,9 @@ export class AssignmentsComponent implements OnInit {
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
 
   // ici on injecte le service
-  constructor(private assignmentsService: AssignmentsService,
-    private ngZone: NgZone) {}
+  constructor(
+    private assignmentsService: AssignmentsService,
+    private ngZone: NgZone) { }
 
   getColor(a: any) {
     return a.rendu ? 'green' : 'red';
@@ -104,15 +105,15 @@ export class AssignmentsComponent implements OnInit {
         // On ne rentre que si on scrolle vers le bas, que si
         // la distance de la scrollbar est < 100 pixels et que
         // toutes les 200 ms
-          console.log('On demande de nouveaux assignments');
-          // on va faire une requête pour demander les assignments suivants
-          // et on va concatener le resultat au tableau des assignments courants
-          console.log('je CHARGE DE NOUVELLES DONNEES page = ' + this.page);
-          this.ngZone.run(() => {
-            if (!this.hasNextPage) return;
-            this.page = this.nextPage;
-            this.getAssignmentsFromServicePourScrollInfini();
-          });
+        console.log('On demande de nouveaux assignments');
+        // on va faire une requête pour demander les assignments suivants
+        // et on va concatener le resultat au tableau des assignments courants
+        console.log('je CHARGE DE NOUVELLES DONNEES page = ' + this.page);
+        this.ngZone.run(() => {
+          if (!this.hasNextPage) return;
+          this.page = this.nextPage;
+          this.getAssignmentsFromServicePourScrollInfini();
+        });
       });
   }
 

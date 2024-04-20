@@ -25,7 +25,7 @@ export class CheckingInterceptor implements HttpInterceptor {
             console.error('Unauthorized request:', err);
             // Handle unauthorized access
             // For example, navigate to the login page
-            this.router.navigate(['/unauthorized']);
+            // this.router.navigate(['/unauthorized']);
           } else if (err.status === 403) {
             console.error('Forbidden:', err);
             // Handle forbidden access

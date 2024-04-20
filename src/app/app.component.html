@@ -10,6 +10,11 @@
       <mat-toolbar-row>
         <button mat-button (click)="opened =! opened"><mat-icon>menu</mat-icon></button>
         <button mat-button><mat-icon>home</mat-icon>Home</button>
+        @if (userConnected) {
+        <div class="ml-auto">
+          <button mat-button (click)="callLogout()"><mat-icon>logout</mat-icon>Se deconnecter</button>
+        </div>
+        }
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container>
