@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { User } from '../models/user/user';
 import { UserService } from '../services/user/user.service';
+import { ArgsRegisterTypes } from '../shared/types/register';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -34,6 +36,7 @@ export class RegisterComponent {
   constructor(
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
+    private authService: AuthService
 
   ) {
     this.registerForm = this.formBuilder.group({
@@ -50,11 +53,11 @@ export class RegisterComponent {
       lastName: new FormControl('Razafindrakoto', [Validators.required]),
       firstName: new FormControl('Manolotsoa', [Validators.required]),
       email: new FormControl('manolotsoadaniel@gmail.com', [Validators.required, Validators.email]),
-      password: new FormControl('itu1506!', [
+      password: new FormControl('12345678', [
         Validators.required,
         Validators.minLength(8)
       ]),
-      confirmPassword: new FormControl('itu1506!', [
+      confirmPassword: new FormControl('12345678', [
         Validators.required,
         Validators.minLength(8),
       ]),
@@ -122,7 +125,7 @@ export class RegisterComponent {
     this._snackBar.open(message, action, {
       duration: 36000000,
       verticalPosition: 'top',
-      panelClass: ["success-snackbar"],
+      panelClass: !error ? ["success-snackbar"] : ["error-snackbar"],
       horizontalPosition: 'right'
     });
   }
@@ -136,14 +139,25 @@ export class RegisterComponent {
     } = this.registerForm?.value;
 
     if (this.registerForm?.valid) {
-      const userToCreate: User = {
+      const userToCreate: ArgsRegisterTypes = {
         lastName,
         firstName,
         email,
         password
       }
-      console.log("userToCreate ", userToCreate);
-      this.openSnackBar("Compte créé avec succes", "ok")
+      this.authService.register(userToCreate).subscribe({
+        next: (response => {
+          console.log("response ", response);
+          this.openSnackBar("Compte créé avec succes", "ok")
+        }),
+        error: (responseError => {
+          if (responseError?.error?.error?.code == "11000") {
+            console.log("responseError ", responseError?.error?.error?.code);
+            this.openSnackBar("Erreur lors de la soumission", "x", true)
+          }
+        })
+      })
+
     }
     else {
       console.log("Form not invalid");
