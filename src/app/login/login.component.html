@@ -1,0 +1,44 @@
+<div class="w-full h-[100vh]">
+    <div class="flex h-full justify-center items-center">
+        <mat-card class="w-[50%]">
+            <mat-card-header class="flex justify-center mb-[20px]">
+                <mat-card-title>Se connecter</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="flex flex-col" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="pat@example.com" formControlName="email" required type="email" />
+                        <mat-error *ngIf="loginForm.get('email')?.invalid">
+                            {{ getEmailErrorMessage()}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Mot de passe</mat-label>
+                        <input matInput placeholder="My Secret password" formControlName="password" required
+                            type="password" />
+                        <mat-error *ngIf="loginForm.get('password')?.invalid">
+                            {{ getPasswordErrorMessage() }}
+                        </mat-error>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" ripple>Login</button>
+                    <div class="mt-3">
+                        <a mat-button routerLink="/register">Vous n'avez pas de compte ?</a>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        <!-- <div>
+            <button (click)="callApiInternalServer()" mat-raised-button color="primary" ripple>InternalServer</button>
+            <button (click)="callApiForbiden()" mat-raised-button color="primary" ripple>Forbidden</button>
+            <button (click)="callApiUnauthorized()" mat-raised-button color="primary" ripple>Unauthorized</button>
+            <button (click)="callApiOk()" mat-raised-button color="primary" ripple>OK</button>
+            <button (click)="callLogout()" mat-raised-button color="error" ripple>LOGOUT</button>
+        </div>
+        <ng-container *ngIf="userConnected">
+            <div>
+                {{userConnected.email}} is connected!
+            </div>
+        </ng-container> -->
+    </div>
+</div>

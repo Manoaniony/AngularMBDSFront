@@ -1,0 +1,1 @@
+export { ArgsRegisterTypes } from "./ArgsRegister.types"

@@ -26,7 +26,8 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/app/register/register.component.css"
             ],
             "scripts": []
           },
@@ -49,7 +50,13 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -95,6 +102,6 @@
     }
   },
   "cli": {
-    "analytics": "de014b47-f1a0-4bb8-b4c7-c77e851fb60f"
+    "analytics": "7b9075d1-fb26-4fe9-a7e4-e019b64fecd0"
   }
 }

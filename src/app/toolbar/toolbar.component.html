@@ -10,8 +10,10 @@
     <span class="spacer"></span>
 
     <nav>
-        <a routerLink="/home" class="app-title">
-            nom
-        </a>
+        @if (userConnected) {
+        <div class="ml-auto">
+            <button mat-button><mat-icon>user</mat-icon>{{userConnected.email}}</button>
+        </div>
+        }
     </nav>
 </mat-toolbar>

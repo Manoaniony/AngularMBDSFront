@@ -1,0 +1,1 @@
+export type { ArgsMeTypes } from "./ArgsMe.types"
