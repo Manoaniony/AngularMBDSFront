@@ -6,9 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
-import { User } from '../models/user/user';
-import { UserService } from '../services/user/user.service';
+import { Router, RouterLink } from '@angular/router';
 import { ArgsRegisterTypes } from '../shared/types/register';
 import { AuthService } from '../services/auth/auth.service';
 
@@ -36,8 +34,8 @@ export class RegisterComponent {
   constructor(
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private authService: AuthService
-
+    private authService: AuthService,
+    private router: Router
   ) {
     this.registerForm = this.formBuilder.group({
       lastName: ['', Validators.required],
@@ -87,6 +85,9 @@ export class RegisterComponent {
     if (this.registerForm.get('email')?.touched && this.registerForm.get('email')?.hasError('required')) {
       return 'Vous devez entrer votre email';
     }
+    else if (this.registerForm.get('email')?.hasError('duplicate')) {
+      return 'Cet email existe dejà'
+    }
     return this.registerForm.get('email')?.hasError('email')
       ? 'Vous devez entrer un adresse email valide'
       : '';
@@ -123,7 +124,7 @@ export class RegisterComponent {
 
   openSnackBar(message: string, action: string, error?: boolean) {
     this._snackBar.open(message, action, {
-      duration: 36000000,
+      duration: 2000,
       verticalPosition: 'top',
       panelClass: !error ? ["success-snackbar"] : ["error-snackbar"],
       horizontalPosition: 'right'
@@ -147,13 +148,15 @@ export class RegisterComponent {
       }
       this.authService.register(userToCreate).subscribe({
         next: (response => {
-          console.log("response ", response);
-          this.openSnackBar("Compte créé avec succes", "ok")
+          if (response?.status == "201") {
+            this.openSnackBar("Compte créé avec succes", "ok");
+            this.router.navigate(["/login"]);
+          }
         }),
         error: (responseError => {
           if (responseError?.error?.error?.code == "11000") {
-            console.log("responseError ", responseError?.error?.error?.code);
-            this.openSnackBar("Erreur lors de la soumission", "x", true)
+            // this.openSnackBar("Erreur lors de la soumission", "x", true)
+            this.registerForm.get('email')?.setErrors({ "duplicate": true })
           }
         })
       })
