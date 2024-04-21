@@ -13,7 +13,7 @@ import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.com
 // import { authenticationGuard } from './shared/authentication.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: AssignmentsComponent },
   { path: "add", component: AddAssignmentComponent },
   { path: "assignment/:id", component: AssignmentDetailComponent },
