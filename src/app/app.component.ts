@@ -35,10 +35,10 @@ import { UserService } from './services/user/user.service';
     MatIconModule,
     MatSlideToggleModule,
     MatToolbarModule,
-    AssignmentsComponent, 
-    MatSidenavModule, 
-    MatListModule, 
-    SidenavComponent, 
+    AssignmentsComponent,
+    MatSidenavModule,
+    MatListModule,
+    SidenavComponent,
     ToolbarComponent,
     CommonModule,
     CommonModule,
@@ -67,6 +67,11 @@ export class AppComponent {
     private authService: AuthService,
     private assignmentsService: AssignmentsService,
     private router: Router) { }
+
+
+  open() {
+    this.opened = !this.opened;
+  }
 
   login() {
     // on utilise le service d'autentification
