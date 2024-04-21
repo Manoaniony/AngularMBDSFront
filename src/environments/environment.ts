@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://localhost:8010/api'
+    apiUrl: 'https://angularmbdsback-i02y.onrender.com/api'
 };
