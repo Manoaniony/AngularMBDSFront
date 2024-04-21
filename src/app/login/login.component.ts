@@ -47,12 +47,6 @@ export class LoginComponent {
     });
   }
 
-  ngOnInit() {
-    this.userService.getCurrentUser()?.subscribe((user: any) => {
-      this.userConnected = user;
-    })
-  }
-
   getEmailErrorMessage() {
     if (this.loginForm.get('email')?.hasError('required')) {
       return 'Ce champ est requis!';
