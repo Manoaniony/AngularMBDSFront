@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 
 // importation des données de test
 import { bdInitialAssignments } from './data';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,9 @@ export class AssignmentsService {
               private http:HttpClient) { }
 
   //uri = 'http://localhost:8010/api/assignments';
-  uri = "https://angularmbdsmadagascar2024.onrender.com/api/assignments";
+  //uri = "https://angularmbdsmadagascar2024.onrender.com/api/assignments";
   //uri = "https://angularmbdsback-i02y.onrender.com/api/assignments";
+  uri = environment.apiUrl+"/assignments";
 
   // retourne tous les assignments
   getAssignments():Observable<Assignment[]> {
