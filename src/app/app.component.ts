@@ -57,7 +57,7 @@ import { UserService } from './services/user/user.service';
 
 export class AppComponent {
   title = 'Application de gestion des assignments';
-  opened = false;
+  opened = true;
   Layouts = Layouts;
   layout: Layouts | undefined;
   userConnected: User | undefined;
