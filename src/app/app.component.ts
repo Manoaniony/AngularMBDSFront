@@ -23,6 +23,7 @@ import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.com
 import { UserModule } from './user/user.module';
 import { User } from './models/user/user';
 import { UserService } from './services/user/user.service';
+import { ListSubjectComponent } from './subjects/list-subject/list-subject.component';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,8 @@ import { UserService } from './services/user/user.service';
     ForbiddenComponent,
     InternalServerComponent,
     UnauthorizedComponent,
-    UserModule
+    UserModule,
+    ListSubjectComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

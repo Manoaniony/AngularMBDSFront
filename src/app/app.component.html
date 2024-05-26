@@ -6,44 +6,16 @@
   <app-internal-server *ngSwitchCase="Layouts.InternalServer"></app-internal-server>
   <app-unauthorized *ngSwitchCase="Layouts.Unauthorized"></app-unauthorized>
   <ng-container *ngSwitchDefault>
-    <!-- <mat-toolbar color="primary">
-      <mat-toolbar-row>
-        <button mat-button (click)="opened =! opened"><mat-icon>menu</mat-icon></button>
-        <button mat-button><mat-icon>home</mat-icon>Home</button>
-        @if (userConnected) {
-        <div class="ml-auto">
-          <button mat-button (click)="callLogout()"><mat-icon>logout</mat-icon>Se deconnecter</button>
-        </div>
-        }
-      </mat-toolbar-row>
-    </mat-toolbar>
-    <mat-sidenav-container>
-      <mat-sidenav [(opened)]="opened" mode="side">
-        <mat-list>
-          <mat-list-item><a routerLink="/home">Home</a></mat-list-item>
-        </mat-list>
-      </mat-sidenav>
-      <mat-sidenav-content>
-        <h1>
-          <nav>
-            <a routerLink="/home">{{title}}</a>
-          </nav>
-        </h1>
-        <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
-        <button mat-button (click)="genererDonneesDeTest()">Peupler BD</button>
-        <router-outlet></router-outlet>
-      </mat-sidenav-content>
-    </mat-sidenav-container> -->
-    <div >
+    <div>
       <app-toolbar class="toolbar" (open)="open()"></app-toolbar>
-      <mat-drawer-container>
+      <mat-drawer-container class="h-[100vh]">
         <mat-drawer class="sidenav-container" mode="side" [opened]="opened">
           <app-sidenav></app-sidenav>
         </mat-drawer>
         <mat-drawer-content>
           <div class="content">
-            <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
-            <button mat-button (click)="genererDonneesDeTest()">Peupler BD</button>
+            <!-- <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
+            <button mat-button (click)="genererDonneesDeTest()">Peupler BD</button> -->
             <router-outlet></router-outlet>
           </div>
         </mat-drawer-content>

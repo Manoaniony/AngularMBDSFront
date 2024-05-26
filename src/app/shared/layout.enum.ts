@@ -4,5 +4,6 @@ export enum Layouts {
     Assignments,
     Forbidden,
     InternalServer,
-    Unauthorized
+    Unauthorized,
+    Subjects
 }
