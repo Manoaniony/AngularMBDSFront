@@ -1,0 +1,1 @@
+export { DeleteModalTypes } from "./DeleteModal.types"

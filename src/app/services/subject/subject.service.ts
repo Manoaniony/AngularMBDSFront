@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ArgsSubjectCreateTypes, ArgsSubjectUpdateTypes } from '../../shared/types/subject';
+import { ArgsSubjectCreateTypes, ArgsSubjectDeleteTypes, ArgsSubjectUpdateTypes } from '../../shared/types/subject';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Subject } from '../../subjects/subject.model';
 import { ListTypes } from '../../shared/types/list';
 
 @Injectable({
@@ -29,5 +28,9 @@ export class SubjectService {
 
   update(args: ArgsSubjectUpdateTypes): Observable<any> {
     return this.http.put(`${environment?.apiUrl}/subject/${args?._id}/update`, args, {});
+  }
+
+  delete(args: ArgsSubjectDeleteTypes): Observable<any> {
+    return this.http.delete(`${environment?.apiUrl}/subject/${args?._id}`);
   }
 }
