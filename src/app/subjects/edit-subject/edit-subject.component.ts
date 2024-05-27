@@ -69,12 +69,6 @@ export class EditSubjectComponent {
             this.router.navigate(["/subjects"]);
           }
         })
-        // error: (responseError => {
-        //   if (responseError?.error?.error?.code == "11000") {
-        //     // this.openSnackBar("Erreur lors de la soumission", "x", true)
-        //     this.registerForm.get('email')?.setErrors({ "duplicate": true })
-        //   }
-        // })
       })
     }
   }
