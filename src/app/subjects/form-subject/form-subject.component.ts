@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject as SubjectApp } from '../subject.model';
 import { CommonModule } from '@angular/common';
@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 export class FormSubjectComponent {
   subjectForm: FormGroup;
   @Input() subject?: SubjectApp;
+  @Output() onSubmit = new EventEmitter<SubjectApp>();
 
   constructor(private formBuilder: FormBuilder) {
     this.subjectForm = this.formBuilder.group({
@@ -61,5 +62,19 @@ export class FormSubjectComponent {
     return '';
   }
 
-  onSubmit() { }
+  onSubmitForm() {
+    const { label, nomProf, imgProf } = this.subjectForm?.value as SubjectApp;
+    if (this.subjectForm?.valid) {
+      this.onSubmit.emit({
+        _id: this.subject?._id,
+        label,
+        nomProf,
+        imgProf,
+      })
+    }
+    else {
+      console.log("Form not valid");
+    }
+  }
+
 }

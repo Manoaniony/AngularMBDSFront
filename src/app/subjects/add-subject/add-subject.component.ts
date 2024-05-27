@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { Subject as SubjectApp } from '../subject.model';
 
 @Component({
   selector: 'app-add-subject',
@@ -28,5 +29,9 @@ import { RouterLink } from '@angular/router';
 })
 export class AddSubjectComponent {
   constructor() {
+  }
+
+  onSubmit(subjectSubmited: SubjectApp) {
+    console.log("isSubmitted from Add ", subjectSubmited);
   }
 }

@@ -3,7 +3,7 @@
     <h1 class="font-bold">Formulaire du matière</h1>
   </div>
   <div class="w-full h-full justify-center p-4">
-    <form class="flex flex-col" [formGroup]="subjectForm" (ngSubmit)="onSubmit()">
+    <form class="flex flex-col" [formGroup]="subjectForm" (ngSubmit)="onSubmitForm()">
       <mat-form-field>
         <mat-label>Libellé</mat-label>
         <input matInput placeholder="Grails" formControlName="label" required type="text" />

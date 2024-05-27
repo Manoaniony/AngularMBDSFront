@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
-import { Subject } from '../subject.model';
+import { Subject as SubjectApp } from '../subject.model';
 
 @Component({
   selector: 'app-edit-subject',
@@ -25,15 +25,20 @@ import { Subject } from '../subject.model';
   styleUrl: './edit-subject.component.css'
 })
 export class EditSubjectComponent {
-  currentSubject!: Subject;
+  currentSubject!: SubjectApp;
   constructor() {
   }
 
   ngOnInit() {
     this.currentSubject = {
+      _id: "1",
       label: "Grails",
       nomProf: "Galli",
       imgProf: "http://localhost:4200/azertyuiop"
     };
+  }
+
+  onSubmit(subjectSubmited: SubjectApp) {
+    console.log("isSubmitted from Edit ", subjectSubmited);
   }
 }
