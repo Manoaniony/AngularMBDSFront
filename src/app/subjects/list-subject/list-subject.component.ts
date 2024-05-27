@@ -31,10 +31,6 @@ export class ListSubjectComponent {
   ngOnInit() {
     console.log('ngOnInit assignments, appelée AVANT affichage du composant');
     this.displayedColumns = ['label', 'nomProf', 'imgProf', 'actions'];
-    this.subjects = [
-      { label: "Grails", nomProf: "Galli", _id: "1", imgProf: "img_prof_1" },
-      { label: "Big Data", nomProf: "Mopolo", _id: "2", imgProf: "img_prof_2" },
-    ]
     this.subjectService.list().subscribe({
       next: (response => {
         if (response?.status == "200") {

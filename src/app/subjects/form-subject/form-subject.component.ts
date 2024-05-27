@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-form-subject',
@@ -22,7 +23,8 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class FormSubjectComponent {
   subjectForm: FormGroup;
-  @Input() subject?: SubjectApp;
+  @Input() subject?: BehaviorSubject<SubjectApp | undefined>;
+  subjectValue?: SubjectApp;
   @Output() onSubmit = new EventEmitter<SubjectApp>();
 
   constructor(private formBuilder: FormBuilder) {
@@ -34,11 +36,15 @@ export class FormSubjectComponent {
   }
 
   ngOnInit(): void {
-    this.subjectForm = new FormGroup({
-      label: new FormControl(this.subject?.label || '', [Validators.required]),
-      nomProf: new FormControl(this.subject?.nomProf || '', [Validators.required]),
-      imgProf: new FormControl(this.subject?.imgProf || '', [Validators.required])
-    });
+    console.log("data TO EDIT ", this.subject);
+    this.subject?.subscribe((currentSubject: any) => {
+      this.subjectValue = currentSubject;
+      this.subjectForm = new FormGroup({
+        label: new FormControl(this.subjectValue?.label || '', [Validators.required]),
+        nomProf: new FormControl(this.subjectValue?.nomProf || '', [Validators.required]),
+        imgProf: new FormControl(this.subjectValue?.imgProf || '', [Validators.required])
+      });
+    })
   }
 
   getLabelErrorMessage() {
@@ -66,7 +72,7 @@ export class FormSubjectComponent {
     const { label, nomProf, imgProf } = this.subjectForm?.value as SubjectApp;
     if (this.subjectForm?.valid) {
       this.onSubmit.emit({
-        _id: this.subject?._id,
+        _id: this.subjectValue?._id,
         label,
         nomProf,
         imgProf,
