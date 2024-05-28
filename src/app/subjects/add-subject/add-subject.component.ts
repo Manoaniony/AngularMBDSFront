@@ -31,6 +31,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './add-subject.component.css'
 })
 export class AddSubjectComponent {
+  state: "none" | "pending" | "done" = "none";
   constructor(
     private subjectService: SubjectService,
     private _snackBar: MatSnackBar,
@@ -48,12 +49,13 @@ export class AddSubjectComponent {
   }
 
   onSubmit(subjectSubmited: SubjectApp) {
-    console.log("isSubmitted from Add ", subjectSubmited);
+    this.state = "pending";
     this.subjectService.create(subjectSubmited as ArgsSubjectCreateTypes).subscribe({
       next: (response => {
         if (response?.status == "201") {
           this.openSnackBar("Matière a été créé avec succès", "ok");
           this.router.navigate(["/subjects"]);
+          this.state = "done"
         }
       })
     })

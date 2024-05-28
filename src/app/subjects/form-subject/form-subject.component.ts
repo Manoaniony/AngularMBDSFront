@@ -6,6 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { BehaviorSubject } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-form-subject',
@@ -17,6 +20,8 @@ import { BehaviorSubject } from 'rxjs';
     MatInputModule,
     MatCardModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
   ],
   templateUrl: './form-subject.component.html',
   styleUrl: './form-subject.component.css'
@@ -24,8 +29,17 @@ import { BehaviorSubject } from 'rxjs';
 export class FormSubjectComponent {
   subjectForm: FormGroup;
   @Input() subject?: BehaviorSubject<SubjectApp | undefined>;
+  @Input() state?: "none" | "pending" | "done";
   subjectValue?: SubjectApp;
   @Output() onSubmit = new EventEmitter<SubjectApp>();
+  loading: boolean = false;
+
+  toggleLoading(): void {
+
+    console.log("Toggle run ", this.loading);
+
+    this.loading = !this.loading;
+  }
 
   constructor(private formBuilder: FormBuilder) {
     this.subjectForm = this.formBuilder.group({

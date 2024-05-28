@@ -30,6 +30,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EditSubjectComponent {
   currentSubject?: BehaviorSubject<SubjectApp | undefined>;
+  state: "none" | "pending" | "done" = "none";
   constructor(
     private subjectService: SubjectService,
     private activatedRoute: ActivatedRoute,
@@ -61,11 +62,13 @@ export class EditSubjectComponent {
 
   onSubmit(subjectSubmited?: SubjectApp) {
     if (subjectSubmited) {
+      this.state = "pending";
       console.log("isSubmitted from Edit ", subjectSubmited);
       this.subjectService.update(subjectSubmited as ArgsSubjectUpdateTypes).subscribe({
         next: (response => {
           if (response?.status == "200") {
             this.openSnackBar("Matière a été mise à jour avec succès", "ok");
+            this.state = "done";
             this.router.navigate(["/subjects"]);
           }
         })

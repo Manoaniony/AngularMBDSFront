@@ -6,3 +6,7 @@ mat-sidenav {
     width: 150px;
     background-color: rgb(219, 220, 223);
 }
+
+.mat-progress-spinner::ng-deep circle {
+    stroke: currentColor;
+}

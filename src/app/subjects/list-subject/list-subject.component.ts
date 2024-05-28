@@ -52,7 +52,7 @@ export class ListSubjectComponent {
       enterAnimationDuration,
       exitAnimationDuration,
       data: {
-        title: "Subject",
+        title: "Confirmation suppression",
         content: `Voulez-vous vraiment le supprimer ?`,
         cancel: "annuler",
         validate: "Oui",

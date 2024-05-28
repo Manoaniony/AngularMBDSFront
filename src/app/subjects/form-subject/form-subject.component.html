@@ -1,6 +1,7 @@
 <div class="flex flex-col gap-3">
   <div class="p-4 flex">
     <h1 class="font-bold">Formulaire du matière</h1>
+    <!-- <h1>State: {{state}}</h1> -->
   </div>
   <div class="w-full h-full justify-center p-4">
     <form class="flex flex-col" [formGroup]="subjectForm" (ngSubmit)="onSubmitForm()">
@@ -25,7 +26,22 @@
           {{ getImageErrorMessage()}}
         </mat-error>
       </mat-form-field>
-      <button [disabled]="!subjectForm.valid" mat-raised-button color="primary" ripple>Valider</button>
+      <div>
+        <button [disabled]="!subjectForm.valid" mat-raised-button color="primary" ripple>
+          <div class="flex gap-3">
+            @if(state === "pending"){
+            <span>
+              <mat-spinner class="mat-spinner-color" [diameter]="20"></mat-spinner>
+            </span>
+            }
+            @else{
+            <span>
+              Valider
+            </span>
+            }
+          </div>
+        </button>
+      </div>
     </form>
   </div>
 </div>
