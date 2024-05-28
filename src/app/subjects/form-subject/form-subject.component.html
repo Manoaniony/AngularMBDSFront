@@ -1,0 +1,47 @@
+<div class="flex flex-col gap-3">
+  <div class="p-4 flex">
+    <h1 class="font-bold">Formulaire du matière</h1>
+    <!-- <h1>State: {{state}}</h1> -->
+  </div>
+  <div class="w-full h-full justify-center p-4">
+    <form class="flex flex-col" [formGroup]="subjectForm" (ngSubmit)="onSubmitForm()">
+      <mat-form-field>
+        <mat-label>Libellé</mat-label>
+        <input matInput placeholder="Grails" formControlName="label" required type="text" />
+        <mat-error *ngIf="subjectForm.get('label')?.invalid">
+          {{ getLabelErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nom du professeur</mat-label>
+        <input matInput placeholder="Doe" formControlName="nomProf" required type="text" />
+        <mat-error *ngIf="subjectForm.get('nomProf')?.invalid">
+          {{ getNomProfErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>image du professeur</mat-label>
+        <input matInput placeholder="http://localhost/azertyuiop" formControlName="imgProf" required type="text" />
+        <mat-error *ngIf="subjectForm.get('imgProf')?.invalid">
+          {{ getImageErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <button [disabled]="!subjectForm.valid" mat-raised-button color="primary" ripple>
+          <div class="flex gap-3">
+            @if(state === "pending"){
+            <span>
+              <mat-spinner class="mat-spinner-color" [diameter]="20"></mat-spinner>
+            </span>
+            }
+            @else{
+            <span>
+              Valider
+            </span>
+            }
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

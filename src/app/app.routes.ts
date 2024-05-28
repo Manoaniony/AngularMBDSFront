@@ -10,6 +10,10 @@ import { RegisterComponent } from './register/register.component';
 import { ForbiddenComponent } from './pageError/forbidden/forbidden.component';
 import { InternalServerComponent } from './pageError/internal-server/internal-server.component';
 import { UnauthorizedComponent } from './pageError/unauthorized/unauthorized.component';
+import { ListSubjectComponent } from './subjects/list-subject/list-subject.component';
+import { AddSubjectComponent } from './subjects/add-subject/add-subject.component';
+import { EditSubjectComponent } from './subjects/edit-subject/edit-subject.component';
+import { DetailSubjectComponent } from './subjects/detail-subject/detail-subject.component';
 // import { authenticationGuard } from './shared/authentication.guard';
 
 export const routes: Routes = [
@@ -17,6 +21,31 @@ export const routes: Routes = [
   { path: 'home', component: AssignmentsComponent },
   { path: "add", component: AddAssignmentComponent },
   { path: "assignment/:id", component: AssignmentDetailComponent },
+  {
+    path: "assignment/:id/edit",
+    component: EditAssignmentComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: "subjects",
+    component: ListSubjectComponent,
+    data: { layout: Layouts.Subjects }
+  },
+  {
+    path: "subject/add",
+    component: AddSubjectComponent,
+    data: { layout: Layouts.Subjects }
+  },
+  {
+    path: "subject/:id/edit",
+    component: EditSubjectComponent,
+    data: { layout: Layouts.Subjects }
+  },
+  {
+    path: "subject/:id",
+    component: DetailSubjectComponent,
+    data: { layout: Layouts.Subjects }
+  },
   {
     path: "assignment/:id/edit",
     component: EditAssignmentComponent,
