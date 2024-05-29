@@ -6,20 +6,18 @@
   <app-internal-server *ngSwitchCase="Layouts.InternalServer"></app-internal-server>
   <app-unauthorized *ngSwitchCase="Layouts.Unauthorized"></app-unauthorized>
   <ng-container *ngSwitchDefault>
-    <div>
-      <app-toolbar class="toolbar" (open)="open()"></app-toolbar>
-      <mat-drawer-container class="h-[100vh]">
-        <mat-drawer class="sidenav-container" mode="side" [opened]="opened">
-          <app-sidenav></app-sidenav>
-        </mat-drawer>
-        <mat-drawer-content>
-          <div class="content">
-            <!-- <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
+    <!-- <app-toolbar class="toolbar" (open)="open()"></app-toolbar> -->
+    <mat-drawer-container class="h-[100vh]">
+      <mat-drawer class="sidenav-container" mode="side" [opened]="opened">
+        <app-sidenav></app-sidenav>
+      </mat-drawer>
+      <mat-drawer-content>
+        <div class="content">
+          <!-- <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
             <button mat-button (click)="genererDonneesDeTest()">Peupler BD</button> -->
-            <router-outlet></router-outlet>
-          </div>
-        </mat-drawer-content>
-      </mat-drawer-container>
-    </div>
+          <router-outlet></router-outlet>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
   </ng-container>
 </ng-container>

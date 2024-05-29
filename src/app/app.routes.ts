@@ -14,6 +14,9 @@ import { ListSubjectComponent } from './subjects/list-subject/list-subject.compo
 import { AddSubjectComponent } from './subjects/add-subject/add-subject.component';
 import { EditSubjectComponent } from './subjects/edit-subject/edit-subject.component';
 import { DetailSubjectComponent } from './subjects/detail-subject/detail-subject.component';
+import { ListExercisesComponent } from './exercises/list-exercises/list-exercises.component';
+import { AddExercisesComponent } from './exercises/add-exercises/add-exercises.component';
+import { EditExercisesComponent } from './exercises/edit-exercises/edit-exercises.component';
 // import { authenticationGuard } from './shared/authentication.guard';
 
 export const routes: Routes = [
@@ -45,6 +48,20 @@ export const routes: Routes = [
     path: "subject/:id",
     component: DetailSubjectComponent,
     data: { layout: Layouts.Subjects }
+  },
+  {
+    path: "exercises",
+    component: ListExercisesComponent,
+    data: { layout: Layouts.Exercise }
+  },
+  {
+    path: "exercises/add",
+    component: AddExercisesComponent,
+    data: { layout: Layouts.Exercise }
+  },
+  {
+    path: "exercise/:id/edit",
+    component: EditExercisesComponent
   },
   {
     path: "assignment/:id/edit",
