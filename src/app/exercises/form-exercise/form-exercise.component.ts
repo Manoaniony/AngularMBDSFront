@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -35,6 +35,7 @@ export class FormExerciseComponent {
   exerciseForm: FormGroup;
   @Input() subject?: BehaviorSubject<Exercise | undefined>;
   @Input() state?: "none" | "pending" | "done";
+  @Input() extraError?: Observable<{ duplicate: boolean }>;
   exerciseValue?: Exercise;
   @Output() onSubmit = new EventEmitter<Exercise>();
   loading: boolean = false;
@@ -89,6 +90,14 @@ export class FormExerciseComponent {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if ((changes as any)?.extraError) {
+      this.extraError?.subscribe((error) => {
+        this.exerciseForm.get('matiere')?.setErrors(error);
+      })
+    }
+  }
+
   displayFn(exercice: Exercise): string {
     return exercice?.label || '';
   }
@@ -107,8 +116,11 @@ export class FormExerciseComponent {
   }
 
   getMatiereErrorMessage() {
-    if (this.exerciseForm.get('matiere')?.invalid) {
+    if (this.exerciseForm.get('matiere')?.hasError('required')) {
       return 'Vous devez choisir une matière';
+    }
+    else if (this.exerciseForm.get('matiere')?.hasError('duplicate')) {
+      return 'Matière et libellé doivent être unique'
     }
     return '';
   }

@@ -11,6 +11,7 @@ import { ExerciseService } from '../../services/exercise/exercise.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Exercise } from '../exercise.model';
 import { ArgsExerciseCreateTypes } from '../../shared/types/exercise';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-add-exercises',
@@ -32,6 +33,8 @@ import { ArgsExerciseCreateTypes } from '../../shared/types/exercise';
 })
 export class AddExercisesComponent {
   state: "none" | "pending" | "done" = "none";
+  extraError?: Observable<{ duplicate: boolean }>;
+
   constructor(
     private exerciseService: ExerciseService,
     private _snackBar: MatSnackBar,
@@ -56,6 +59,11 @@ export class AddExercisesComponent {
           this.openSnackBar("Exercice a été créé avec succès", "ok");
           this.router.navigate(["/exercises"]);
           this.state = "done"
+        }
+      }),
+      error: (responseError => {
+        if (responseError?.error?.error?.code == "11000") {
+          this.extraError = of({ duplicate: true })
         }
       })
     })
