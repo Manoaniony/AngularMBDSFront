@@ -33,7 +33,7 @@ import { SubjectService } from '../../services/subject/subject.service';
 })
 export class FormExerciseComponent {
   exerciseForm: FormGroup;
-  @Input() subject?: BehaviorSubject<Exercise | undefined>;
+  @Input() exercise?: BehaviorSubject<Exercise | undefined>;
   @Input() state?: "none" | "pending" | "done";
   @Input() extraError?: Observable<{ duplicate: boolean }>;
   exerciseValue?: Exercise;
@@ -58,9 +58,9 @@ export class FormExerciseComponent {
   }
 
   ngOnInit(): void {
-    console.log("data TO EDIT ", this.subject);
-    this.subject?.subscribe((currentSubject: any) => {
-      this.exerciseValue = currentSubject;
+    console.log("data TO EDIT ", this.exercise);
+    this.exercise?.subscribe((currentExercise: any) => {
+      this.exerciseValue = currentExercise;
       this.exerciseForm = new FormGroup({
         label: new FormControl(this.exerciseValue?.label || '', [Validators.required]),
         matiere: new FormControl(this.exerciseValue?.matiere || '', [Validators.required]),
@@ -120,20 +120,28 @@ export class FormExerciseComponent {
       return 'Vous devez choisir une matière';
     }
     else if (this.exerciseForm.get('matiere')?.hasError('duplicate')) {
-      return 'Matière et libellé doivent être unique'
+      return 'Matière et libellé doivent être unique';
     }
     return '';
   }
+
+  resetExtraError() {
+    this.extraError = undefined;
+    this.exerciseForm.get('matiere')?.setErrors(null);
+  }
+
   onSubmitForm() {
+    this.resetExtraError();
     const { label, matiere } = this.exerciseForm?.value;
     if (this.exerciseForm?.valid) {
       this.onSubmit.emit({
+        _id: this.exerciseValue?._id,
         label,
         matiere
       })
     }
     else {
-      console.log("Form not valid");
+      console.log("Form not valid ", this.exerciseForm?.controls);
     }
 
   }

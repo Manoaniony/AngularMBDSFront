@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ListTypes } from '../../shared/types/list';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { ArgsExerciseCreateTypes, ArgsExerciseDeleteTypes } from '../../shared/types/exercise';
+import { ArgsExerciseCreateTypes, ArgsExerciseDeleteTypes, ArgsExerciseUpdateTypes } from '../../shared/types/exercise';
 
 @Injectable({
   providedIn: 'root'
@@ -25,4 +25,13 @@ export class ExerciseService {
   delete(args: ArgsExerciseDeleteTypes): Observable<any> {
     return this.http.delete(`${environment?.apiUrl}/assignment/${args?._id}`);
   }
+
+  detail(args?: { _id: string }): Observable<any> {
+    return this.http.get<any>(`${environment?.apiUrl}/assignment/${args?._id}`);
+  }
+
+  update(args: ArgsExerciseUpdateTypes): Observable<any> {
+    return this.http.put(`${environment?.apiUrl}/assignment/${args?._id}/update`, args, {});
+  }
+
 }

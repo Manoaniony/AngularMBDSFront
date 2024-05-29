@@ -64,6 +64,7 @@ export class AddExercisesComponent {
       error: (responseError => {
         if (responseError?.error?.error?.code == "11000") {
           this.extraError = of({ duplicate: true })
+          this.state = "none";
         }
       })
     })
