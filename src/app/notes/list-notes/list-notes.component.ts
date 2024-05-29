@@ -1,17 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTable, MatTableModule } from '@angular/material/table';
-import { Router, RouterLink } from '@angular/router';
-import { Exercise } from '../exercise.model';
+import { Note } from '../note.model';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-list-exercises',
+  selector: 'app-list-notes',
   standalone: true,
   imports: [
     CommonModule,
@@ -21,27 +21,30 @@ import { DeleteModalComponent } from '../../delete-modal/delete-modal.component'
     MatButtonModule,
     MatIconModule,
   ],
-  templateUrl: './list-exercises.component.html',
-  styleUrl: './list-exercises.component.css'
+  templateUrl: './list-notes.component.html',
+  styleUrl: './list-notes.component.css'
 })
-export class ListExercisesComponent {
-  // tableau des exercices POUR AFFICHAGE
+export class ListNotesComponent {
   displayedColumns: string[] = [];
-  exercises: Exercise[] = [];
+  notes: Note[] = [];
 
   constructor(
     private exerciseService: ExerciseService,
     private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
     private _snackBar: MatSnackBar,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.displayedColumns = ['label', 'matiere', 'actions'];
-    this.exerciseService.list().subscribe({
+    const _id = this.activatedRoute.snapshot.params['id'];
+    this.displayedColumns = ['matricule', 'nom', 'note', 'rendu', 'remarque', 'dateDeRendu', 'actions'];
+    this.exerciseService.detail({ _id }).subscribe({
       next: (response => {
         if (response?.status == "200") {
-          this.exercises = response?.data.docs
+          console.log("response?.data?.eleves ", response?.data?.eleves);
+
+          this.notes = response?.data?.eleves
         }
       })
     })
@@ -83,4 +86,5 @@ export class ListExercisesComponent {
       })
     })
   }
+
 }
