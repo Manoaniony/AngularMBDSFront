@@ -72,15 +72,15 @@ export class ListExercisesComponent {
   }
 
   onDelete(_id: string) {
-    // this.subjectService.delete({ _id }).subscribe({
-    //   next: (response => {
-    //     if (response?.status == "200") {
-    //       this.openSnackBar("Matière a été supprimé avec succès", "ok");
-    //       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    //         this.router.navigate(['/subjects']);
-    //       });
-    //     }
-    //   })
-    // })
+    this.exerciseService.delete({ _id }).subscribe({
+      next: (response => {
+        if (response?.status == "200") {
+          this.openSnackBar("Exercice a été supprimé avec succès", "ok");
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/exercises']);
+          });
+        }
+      })
+    })
   }
 }
