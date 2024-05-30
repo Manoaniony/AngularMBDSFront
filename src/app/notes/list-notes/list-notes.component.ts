@@ -46,7 +46,6 @@ export class ListNotesComponent {
     this.exerciseService.detail({ _id }).subscribe({
       next: (response => {
         if (response?.status == "200") {
-          console.log("response?.data?.eleves ", response?.data?.eleves);
           this.currentAssignment = response?.data;
           this.notes = response?.data?.eleves
         }
