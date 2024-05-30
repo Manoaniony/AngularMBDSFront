@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Note } from '../note.model';
@@ -11,6 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-form-note',
@@ -28,7 +29,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSlideToggleModule
   ],
   templateUrl: './form-note.component.html',
   styleUrl: './form-note.component.css'
@@ -53,8 +55,10 @@ export class FormNoteComponent {
       note: [null, [Validators.required, Validators.min(0), Validators.max(20)]],
       remarque: ['', undefined],
       dateDeRendu: ['', undefined],
+      rendu: [false, undefined]
     })
   }
+  // this.renduControl = new FormControl(false);
 
   ngOnInit(): void {
     this.note?.subscribe((noteToEdit: any) => {
@@ -65,8 +69,18 @@ export class FormNoteComponent {
         note: new FormControl(noteToEdit?.note, [Validators.required, Validators.min(0), Validators.max(20)]),
         remarque: new FormControl(noteToEdit?.remarque),
         dateDeRendu: new FormControl(noteToEdit?.dateDeRendu),
+        rendu: new FormControl(noteToEdit?.rendu || false)
       });
     })
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ((changes as any)?.extraError) {
+      console.log("MATRICULE ALREADY EXIST ", (changes as any)?.extraError);
+      this.extraError?.subscribe((error) => {
+        this.noteForm.get('matricule')?.setErrors(error);
+      })
+    }
   }
 
   getNomErrorMessage() {
@@ -83,13 +97,10 @@ export class FormNoteComponent {
     else if (this.noteForm.get('matricule')?.hasError('duplicate')) {
       return 'Cet etudiant a déjà une note dans cette matière';
     }
-    console.log(this.noteForm.get('matricule')?.errors);
-
     return '';
   }
 
   getNoteErrorMessage() {
-    console.log("this.noteForm.get('note') ", this.noteForm.get('note')?.touched);
     if (this.noteForm.get('note')?.hasError('required')) {
       return 'Vous devez entrer la note de l\'étudiant';
     }
@@ -110,6 +121,17 @@ export class FormNoteComponent {
 
   onSubmitForm() {
     this.resetExtraError();
+    const noteSubmitted = this.noteForm?.value as Note;
+    if (this.noteForm?.valid) {
+      console.log("NoteSubmitted ", noteSubmitted);
+      this.onSubmit.emit({
+        ...noteSubmitted,
+        _id: this.noteValue?._id
+      })
+    }
+    else {
+      console.log("Form not valid");
+    }
   }
 
 }

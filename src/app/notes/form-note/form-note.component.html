@@ -34,6 +34,9 @@
           {{ getNomErrorMessage()}}
         </mat-error>
       </mat-form-field>
+      <div class="my-4">
+        <mat-slide-toggle formControlName="rendu">Rendu</mat-slide-toggle>
+      </div>
       <mat-form-field>
         <mat-label>Choisir une date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="dateDeRendu">
