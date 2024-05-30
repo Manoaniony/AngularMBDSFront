@@ -57,14 +57,14 @@ export class FormNoteComponent {
   }
 
   ngOnInit(): void {
-    this.note?.subscribe((note: any) => {
-      this.noteValue = note;
+    this.note?.subscribe((noteToEdit: any) => {
+      this.noteValue = noteToEdit;
       this.noteForm = new FormGroup({
-        nom: note?.nom || '',
-        matricule: note?.matricule || '',
-        note: note?.note,
-        remarque: note?.remarque,
-        dateDeRendu: note?.dateDeRendu,
+        nom: new FormControl(noteToEdit?.nom || '', [Validators.required]),
+        matricule: new FormControl(noteToEdit?.matricule || '', [Validators.required]),
+        note: new FormControl(noteToEdit?.note, [Validators.required, Validators.min(0), Validators.max(20)]),
+        remarque: new FormControl(noteToEdit?.remarque),
+        dateDeRendu: new FormControl(noteToEdit?.dateDeRendu),
       });
     })
   }
@@ -83,6 +83,8 @@ export class FormNoteComponent {
     else if (this.noteForm.get('matricule')?.hasError('duplicate')) {
       return 'Cet etudiant a déjà une note dans cette matière';
     }
+    console.log(this.noteForm.get('matricule')?.errors);
+
     return '';
   }
 
@@ -99,7 +101,9 @@ export class FormNoteComponent {
 
   resetExtraError() {
     this.extraError = undefined;
-    this.noteForm.get('matricule')?.setErrors({ ...this.noteForm.get('matricule')?.errors, duplicate: false });
+    const errors: any = this.noteForm.get('matricule')?.errors;
+    delete errors?.duplicate;
+    this.noteForm.get('matricule')?.setErrors(errors);
     // console.log(this.noteForm);
 
   }
