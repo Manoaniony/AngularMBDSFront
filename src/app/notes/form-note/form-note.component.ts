@@ -47,24 +47,30 @@ export class FormNoteComponent {
     private formBuilder: FormBuilder,
     private noteService: NoteService,
   ) {
-    this.noteForm = this.formBuilder.group({})
+    this.noteForm = this.formBuilder.group({
+      nom: ['', Validators.required],
+      matricule: ['', Validators.required],
+      note: [null, [Validators.required, Validators.min(0), Validators.max(20)]],
+      remarque: ['', undefined],
+      dateDeRendu: ['', undefined],
+    })
   }
 
   ngOnInit(): void {
     this.note?.subscribe((note: any) => {
       this.noteValue = note;
       this.noteForm = new FormGroup({
-        nom: new FormControl(note?.nom || '', [Validators.required]),
-        matricule: new FormControl(note?.matricule || '', [Validators.required]),
-        note: new FormControl(note?.note || '', [Validators.required]),
-        remarque: new FormControl(note?.remarque || '', null),
-        dateDeRendu: new FormControl(note?.dateDeRendu || '', null),
+        nom: note?.nom || '',
+        matricule: note?.matricule || '',
+        note: note?.note,
+        remarque: note?.remarque,
+        dateDeRendu: note?.dateDeRendu,
       });
     })
   }
 
   getNomErrorMessage() {
-    if (this.noteForm.get('nom')?.touched && this.noteForm.get('nom')?.hasError('required')) {
+    if (this.noteForm.get('nom')?.hasError('required')) {
       return 'Vous devez entrer le nom de l\'etudiant';
     }
     return '';
@@ -80,9 +86,22 @@ export class FormNoteComponent {
     return '';
   }
 
+  getNoteErrorMessage() {
+    console.log("this.noteForm.get('note') ", this.noteForm.get('note')?.touched);
+    if (this.noteForm.get('note')?.hasError('required')) {
+      return 'Vous devez entrer la note de l\'étudiant';
+    }
+    else if (this.noteForm.get('note')?.hasError('min') || this.noteForm.get('note')?.hasError('max')) {
+      return 'La note doit être entre 0 et 20';
+    }
+    return ''
+  }
+
   resetExtraError() {
     this.extraError = undefined;
-    this.noteForm.get('matricule')?.setErrors(null);
+    this.noteForm.get('matricule')?.setErrors({ ...this.noteForm.get('matricule')?.errors, duplicate: false });
+    // console.log(this.noteForm);
+
   }
 
   onSubmitForm() {

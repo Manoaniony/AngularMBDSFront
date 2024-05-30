@@ -16,14 +16,14 @@
         <mat-label>Matricule</mat-label>
         <input matInput placeholder="100000" formControlName="matricule" required type="text" />
         <mat-error *ngIf="noteForm.get('matricule')?.invalid">
-          {{ getNomErrorMessage()}}
+          {{ getMatriculeErrorMessage()}}
         </mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Note</mat-label>
         <input matInput placeholder="100000" formControlName="note" required type="number" />
         <mat-error *ngIf="noteForm.get('note')?.invalid">
-          {{ getNomErrorMessage()}}
+          {{ getNoteErrorMessage()}}
         </mat-error>
       </mat-form-field>
       <mat-form-field>
