@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Exercise } from '../../exercises/exercise.model';
 
 @Component({
   selector: 'app-list-notes',
@@ -27,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class ListNotesComponent {
   displayedColumns: string[] = [];
   notes: Note[] = [];
+  currentAssignment?: Exercise;
 
   constructor(
     private exerciseService: ExerciseService,
@@ -43,7 +45,7 @@ export class ListNotesComponent {
       next: (response => {
         if (response?.status == "200") {
           console.log("response?.data?.eleves ", response?.data?.eleves);
-
+          this.currentAssignment = response?.data;
           this.notes = response?.data?.eleves
         }
       })

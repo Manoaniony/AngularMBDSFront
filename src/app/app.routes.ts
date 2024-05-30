@@ -18,6 +18,7 @@ import { ListExercisesComponent } from './exercises/list-exercises/list-exercise
 import { AddExercisesComponent } from './exercises/add-exercises/add-exercises.component';
 import { EditExercisesComponent } from './exercises/edit-exercises/edit-exercises.component';
 import { ListNotesComponent } from './notes/list-notes/list-notes.component';
+import { EditNotesComponent } from './notes/edit-notes/edit-notes.component';
 // import { authenticationGuard } from './shared/authentication.guard';
 
 export const routes: Routes = [
@@ -67,6 +68,10 @@ export const routes: Routes = [
   {
     path: "exercise/:id/notes",
     component: ListNotesComponent
+  },
+  {
+    path: "exercise/:id/notes/:matricule/edit",
+    component: EditNotesComponent
   },
   {
     path: "assignment/:id/edit",
