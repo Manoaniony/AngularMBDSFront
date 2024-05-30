@@ -9,6 +9,8 @@ import { ExerciseService } from '../../services/exercise/exercise.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
+import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-list-exercises',
@@ -20,6 +22,7 @@ import { DeleteModalComponent } from '../../delete-modal/delete-modal.component'
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatPaginatorModule
   ],
   templateUrl: './list-exercises.component.html',
   styleUrl: './list-exercises.component.css'
@@ -28,6 +31,15 @@ export class ListExercisesComponent {
   // tableau des exercices POUR AFFICHAGE
   displayedColumns: string[] = [];
   exercises: Exercise[] = [];
+  page?: number
+  limit?: number
+  totalDocs?: number
+  totalPages?: number
+  nextPage?: number | null
+  prevPage?: number | null
+  hasNextPage?: number
+  hasPrevPage?: number
+  pagingCounter?: number
 
   constructor(
     private exerciseService: ExerciseService,
@@ -36,12 +48,40 @@ export class ListExercisesComponent {
     private router: Router
   ) { }
 
+  handlePageEvent(event: PageEvent) {
+    this.page = event.pageIndex;
+    this.limit = event.pageSize;
+    this.exerciseService.list({ page: event.pageIndex + 1, limit: this.limit }).subscribe({
+      next: (response => {
+        if (response?.status == "200") {
+          this.exercises = response?.data.docs
+          // pagination
+          this.totalDocs = response?.data?.totalDocs
+          this.totalPages = response?.data?.totalPages
+          this.pagingCounter = response?.data?.pagingCounter
+          this.hasPrevPage = response?.data?.hasPrevPage
+          this.prevPage = response?.data?.prevPage
+          this.nextPage = response?.data?.nextPage
+        }
+      })
+    })
+  }
+
   ngOnInit() {
     this.displayedColumns = ['label', 'matiere', 'actions'];
     this.exerciseService.list().subscribe({
       next: (response => {
         if (response?.status == "200") {
           this.exercises = response?.data.docs
+          // pagination
+          this.totalDocs = response?.data?.totalDocs
+          this.limit = response?.data?.limit
+          this.page = 0
+          this.totalPages = response?.data?.totalPages
+          this.pagingCounter = response?.data?.pagingCounter
+          this.hasPrevPage = response?.data?.hasPrevPage
+          this.prevPage = response?.data?.prevPage
+          this.nextPage = response?.data?.nextPage
         }
       })
     })

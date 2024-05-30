@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Exercise } from '../../exercises/exercise.model';
 import { NoteService } from '../../services/note/note.service';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list-notes',
@@ -21,7 +22,7 @@ import { NoteService } from '../../services/note/note.service';
     MatTable,
     MatTableModule,
     MatButtonModule,
-    MatIconModule,
+    MatIconModule
   ],
   templateUrl: './list-notes.component.html',
   styleUrl: './list-notes.component.css'

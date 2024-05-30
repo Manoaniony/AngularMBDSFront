@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { Subject as SubjectApp } from '../subject.model';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
@@ -9,6 +9,7 @@ import { SubjectService } from '../../services/subject/subject.service';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-list-subject',
   standalone: true,
@@ -19,6 +20,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatPaginatorModule
   ],
   templateUrl: './list-subject.component.html',
   styleUrl: './list-subject.component.css'
@@ -27,7 +29,34 @@ export class ListSubjectComponent {
   // tableau des subjectes POUR AFFICHAGE
   displayedColumns: string[] = [];
   subjects: SubjectApp[] = [];
+  page?: number
+  limit?: number
+  totalDocs?: number
+  totalPages?: number
+  nextPage?: number | null
+  prevPage?: number | null
+  hasNextPage?: number
+  hasPrevPage?: number
+  pagingCounter?: number
 
+  handlePageEvent(event: PageEvent) {
+    this.page = event.pageIndex;
+    this.limit = event.pageSize;
+    this.subjectService.list({ page: event.pageIndex + 1, limit: this.limit }).subscribe({
+      next: (response => {
+        if (response?.status == "200") {
+          this.subjects = response?.data.docs
+          // pagination
+          this.totalDocs = response?.data?.totalDocs
+          this.totalPages = response?.data?.totalPages
+          this.pagingCounter = response?.data?.pagingCounter
+          this.hasPrevPage = response?.data?.hasPrevPage
+          this.prevPage = response?.data?.prevPage
+          this.nextPage = response?.data?.nextPage
+        }
+      })
+    })
+  }
   constructor(
     private subjectService: SubjectService,
     private dialog: MatDialog,
@@ -41,6 +70,15 @@ export class ListSubjectComponent {
       next: (response => {
         if (response?.status == "200") {
           this.subjects = response?.data.docs
+          // pagination
+          this.totalDocs = response?.data?.totalDocs
+          this.limit = response?.data?.limit
+          this.page = 0
+          this.totalPages = response?.data?.totalPages
+          this.pagingCounter = response?.data?.pagingCounter
+          this.hasPrevPage = response?.data?.hasPrevPage
+          this.prevPage = response?.data?.prevPage
+          this.nextPage = response?.data?.nextPage
         }
       })
     })
