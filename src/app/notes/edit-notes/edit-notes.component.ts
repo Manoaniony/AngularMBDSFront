@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Note } from '../note.model';
 import { NoteService } from '../../services/note/note.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -53,24 +53,25 @@ export class EditNotesComponent {
   }
 
   onSubmit(noteSubmitted?: Note) {
+    const _id = this.activatedRoute.snapshot.params['id'];
+    const matricule = this.activatedRoute.snapshot.params['matricule'];
     if (noteSubmitted) {
       this.state = "pending";
-      console.log("isSubmitted from Edit ", noteSubmitted);
-      // this.exerciseService.update(exerciseSubmited as ArgsExerciseUpdateTypes).subscribe({
-      //   next: (response => {
-      //     if (response?.status == "200") {
-      //       this.openSnackBar("Exercice a été mise à jour avec succès", "ok");
-      //       this.state = "done";
-      //       this.router.navigate(["/exercises"]);
-      //     }
-      //   }),
-      //   error: (responseError => {
-      //     if (responseError?.error?.error?.code == "11000") {
-      //       this.extraError = of({ duplicate: true })
-      //       this.state = "none";
-      //     }
-      //   })
-      // })
+      this.noteService.update({ _id, matricule, note: noteSubmitted }).subscribe({
+        next: (response => {
+          if (response?.status == "200") {
+            this.openSnackBar("Note a été mise à jour avec succès", "ok");
+            this.state = "done";
+            this.router.navigate([`/exercise/${_id}/notes`]);
+          }
+        }),
+        error: (responseError => {
+          if (responseError?.error?.error?.code == "11000") {
+            this.extraError = of({ duplicate: true })
+            this.state = "none";
+          }
+        })
+      })
     }
   }
 }

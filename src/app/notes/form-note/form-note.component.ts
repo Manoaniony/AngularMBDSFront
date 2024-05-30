@@ -112,9 +112,9 @@ export class FormNoteComponent {
 
   resetExtraError() {
     this.extraError = undefined;
-    const errors: any = this.noteForm.get('matricule')?.errors;
-    delete errors?.duplicate;
-    this.noteForm.get('matricule')?.setErrors(errors);
+    // const errors: any = this.noteForm.get('matricule')?.errors;
+    // delete errors?.duplicate;
+    // this.noteForm.get('matricule')?.setErrors(errors);
     // console.log(this.noteForm);
 
   }
@@ -130,6 +130,8 @@ export class FormNoteComponent {
       })
     }
     else {
+      console.log("this.noteForm ", this.noteForm);
+
       console.log("Form not valid");
     }
   }

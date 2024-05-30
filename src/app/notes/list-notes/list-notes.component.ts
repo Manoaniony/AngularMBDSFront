@@ -10,6 +10,7 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Exercise } from '../../exercises/exercise.model';
+import { NoteService } from '../../services/note/note.service';
 
 @Component({
   selector: 'app-list-notes',
@@ -32,6 +33,7 @@ export class ListNotesComponent {
 
   constructor(
     private exerciseService: ExerciseService,
+    private noteServuce: NoteService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private _snackBar: MatSnackBar,
@@ -52,7 +54,9 @@ export class ListNotesComponent {
     })
   }
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, _id: string): void {
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, matricule: string): void {
+    const _id = this.activatedRoute.snapshot.params['id'];
+
     this.dialog.open(DeleteModalComponent, {
       width: '300px',
       enterAnimationDuration,
@@ -62,7 +66,7 @@ export class ListNotesComponent {
         content: `Voulez-vous vraiment le supprimer ?`,
         cancel: "annuler",
         validate: "Oui",
-        onDelete: () => { this.onDelete(_id) }
+        onDelete: () => { this.onDelete(_id, matricule) }
       }
     });
   }
@@ -76,13 +80,13 @@ export class ListNotesComponent {
     });
   }
 
-  onDelete(_id: string) {
-    this.exerciseService.delete({ _id }).subscribe({
+  onDelete(_id: string, matricule: string) {
+    this.noteServuce.delete({ _id, matricule }).subscribe({
       next: (response => {
         if (response?.status == "200") {
-          this.openSnackBar("Exercice a été supprimé avec succès", "ok");
+          this.openSnackBar("Note a été supprimé avec succès", "ok");
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/exercises']);
+            this.router.navigate([`/exercise/${_id}/notes`]);
           });
         }
       })
