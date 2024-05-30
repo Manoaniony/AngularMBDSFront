@@ -53,9 +53,6 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <h1>totalDocs {{totalDocs}}</h1>
-    <h1>pageSizeLimit {{limit}}</h1>
-    <h1>page {{page}}</h1>
     <mat-paginator (page)="handlePageEvent($event)" [length]="totalDocs" [pageSize]="limit"
       [showFirstLastButtons]="true" [pageSizeOptions]="[1, 2, 5]" [pageIndex]="page" aria-label="Select page">
     </mat-paginator>
