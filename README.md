@@ -1,7 +1,7 @@
 # AngularMBDSMadagascar2024
 # Membre du groupe
-	28	Ramarolahy	Manoaniony 
-	52	RAZAFINDRAKOTO	Manolotsoa Daniel
+	28-Ramarolahy Manoaniony 
+	52-RAZAFINDRAKOTO Manolotsoa Daniel
 
 # Installation du projet sur votre machine locale
 	git clone https://github.com/Manoaniony/AngularMBDSFront.git
@@ -61,3 +61,8 @@
 # Les liens qui nous a aidé:
 	https://docs.angular.lat/guide/inputs-outputs
 	https://angular.fr/lifecycle/ngchanges
+
+# Les groupe qui nous a aidé (Sur les navBar et ToolBar):
+	17-RAKOTOARIMANANA Sandratriniaina Justicael
+	41-RANDRIANJAFY Toavina Mathieu 
+
