@@ -31,8 +31,10 @@ export class FormSubjectComponent {
   @Input() subject?: BehaviorSubject<SubjectApp | undefined>;
   @Input() state?: "none" | "pending" | "done";
   subjectValue?: SubjectApp;
-  @Output() onSubmit = new EventEmitter<SubjectApp>();
+  @Output() onSubmit = new EventEmitter<SubjectApp & { image?: any }>();
   loading: boolean = false;
+  blobUrl?: string;
+  imageBlob?: Blob;
 
   toggleLoading(): void {
 
@@ -45,7 +47,7 @@ export class FormSubjectComponent {
     this.subjectForm = this.formBuilder.group({
       label: ['', Validators.required],
       nomProf: ['', Validators.required],
-      imgProf: ['', Validators.required],
+      // imgProf: ['', Validators.required],
     })
   }
 
@@ -56,7 +58,7 @@ export class FormSubjectComponent {
       this.subjectForm = new FormGroup({
         label: new FormControl(this.subjectValue?.label || '', [Validators.required]),
         nomProf: new FormControl(this.subjectValue?.nomProf || '', [Validators.required]),
-        imgProf: new FormControl(this.subjectValue?.imgProf || '', [Validators.required])
+        // imgProf: new FormControl(this.subjectValue?.imgProf || '', [Validators.required])
       });
     })
   }
@@ -82,6 +84,22 @@ export class FormSubjectComponent {
     return '';
   }
 
+  onFileSelected() {
+    const inputNode: any = document.querySelector('#file');
+    if (typeof FileReader !== 'undefined') {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        console.log(typeof inputNode.files[0]);
+        this.imageBlob = inputNode.files[0];
+        const imageTemp = new Blob([e.target.result]);
+        this.blobUrl = URL.createObjectURL(imageTemp);
+        // Process the selected file (e.target.result contains file data)
+        // For example, you can display the file content or upload it to a server.
+      };
+      reader.readAsArrayBuffer(inputNode.files[0]);
+    }
+  }
+
   onSubmitForm() {
     const { label, nomProf, imgProf } = this.subjectForm?.value as SubjectApp;
     if (this.subjectForm?.valid) {
@@ -89,7 +107,8 @@ export class FormSubjectComponent {
         _id: this.subjectValue?._id,
         label,
         nomProf,
-        imgProf,
+        imgProf: this.subjectValue?.imgProf,
+        image: this.imageBlob
       })
     }
     else {

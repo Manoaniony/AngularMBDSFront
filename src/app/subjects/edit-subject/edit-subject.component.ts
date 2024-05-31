@@ -60,7 +60,7 @@ export class EditSubjectComponent {
     });
   }
 
-  onSubmit(subjectSubmited?: SubjectApp) {
+  onSubmit(subjectSubmited?: SubjectApp & { image?: any }) {
     if (subjectSubmited) {
       this.state = "pending";
       console.log("isSubmitted from Edit ", subjectSubmited);
@@ -70,6 +70,15 @@ export class EditSubjectComponent {
             this.openSnackBar("Matière a été mise à jour avec succès", "ok");
             this.state = "done";
             this.router.navigate(["/subjects"]);
+            if (subjectSubmited?.image) {
+              console.log(subjectSubmited?.image);
+              this.subjectService.upload({ image: subjectSubmited?.image }).subscribe((responseUpload: any) => {
+                console.log("responseUpload ", responseUpload?.data[0]);
+                this.subjectService?.update({ ...response?.data, imgProf: responseUpload?.data[0]?.url }).subscribe((responseUpdate) => {
+                  console.log("update done! ", responseUpdate);
+                })
+              })
+            }
           }
         })
       })

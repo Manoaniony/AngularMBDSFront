@@ -48,14 +48,24 @@ export class AddSubjectComponent {
     });
   }
 
-  onSubmit(subjectSubmited: SubjectApp) {
+  onSubmit(subjectSubmited: SubjectApp & { image?: any }) {
     this.state = "pending";
     this.subjectService.create(subjectSubmited as ArgsSubjectCreateTypes).subscribe({
       next: (response => {
         if (response?.status == "201") {
           this.openSnackBar("Matière a été créé avec succès", "ok");
           this.router.navigate(["/subjects"]);
-          this.state = "done"
+          this.state = "done";
+          console.log("creation response ", response?.data);
+          if (subjectSubmited?.image) {
+            console.log(subjectSubmited?.image);
+            this.subjectService.upload({ image: subjectSubmited?.image }).subscribe((responseUpload: any) => {
+              console.log("responseUpload ", responseUpload?.data[0]);
+              this.subjectService?.update({ ...response?.data, imgProf: responseUpload?.data[0]?.url }).subscribe((responseUpdate) => {
+                console.log("update done! ", responseUpdate);
+              })
+            })
+          }
         }
       })
     })

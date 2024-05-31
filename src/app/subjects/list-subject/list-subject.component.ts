@@ -65,7 +65,7 @@ export class ListSubjectComponent {
   ) { }
 
   ngOnInit() {
-    this.displayedColumns = ['label', 'nomProf', 'imgProf', 'actions'];
+    this.displayedColumns = ['label', 'nomProf', 'actions'];
     this.subjectService.list().subscribe({
       next: (response => {
         if (response?.status == "200") {
