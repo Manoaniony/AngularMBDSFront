@@ -24,14 +24,14 @@ import { AddNotesComponent } from './notes/add-notes/add-notes.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'home', component: AssignmentsComponent },
-  { path: "add", component: AddAssignmentComponent },
-  { path: "assignment/:id", component: AssignmentDetailComponent },
-  {
-    path: "assignment/:id/edit",
-    component: EditAssignmentComponent,
-    canActivate: [authGuard]
-  },
+  { path: 'home', component: ListExercisesComponent },
+  // { path: "add", component: AddAssignmentComponent },
+  // { path: "assignment/:id", component: AssignmentDetailComponent },
+  // {
+  //   path: "assignment/:id/edit",
+  //   component: EditAssignmentComponent,
+  //   canActivate: [authGuard]
+  // },
   {
     path: "subjects",
     component: ListSubjectComponent,
@@ -78,11 +78,11 @@ export const routes: Routes = [
     path: "exercise/:id/note/new",
     component: AddNotesComponent
   },
-  {
-    path: "assignment/:id/edit",
-    component: EditAssignmentComponent,
-    canActivate: [authGuard]
-  },
+  // {
+  //   path: "assignment/:id/edit",
+  //   component: EditAssignmentComponent,
+  //   canActivate: [authGuard]
+  // },
   {
     path: "login",
     component: LoginComponent,
