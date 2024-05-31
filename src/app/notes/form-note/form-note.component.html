@@ -21,7 +21,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Note</mat-label>
-        <input matInput placeholder="100000" formControlName="note" required type="number" />
+        <input matInput placeholder="10" formControlName="note" required type="number" />
         <mat-error *ngIf="noteForm.get('note')?.invalid">
           {{ getNoteErrorMessage()}}
         </mat-error>
