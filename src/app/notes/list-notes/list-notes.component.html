@@ -1,16 +1,24 @@
 <div class="flex flex-col gap-3">
   <div class="p-4 flex">
-    <h1 class="font-bold">Table de representation des notes</h1>
-    <div class="btnAjout ml-auto">
-      <a routerLink="/exercise/{{currentAssignment?._id}}/note/new">
-        <button mat-flat-button color="accent">
-          <mat-icon matListItemIcon class="item-icon">add</mat-icon>
-          Nouvelle note
-        </button>
-      </a>
+    <h1 class="font-bold">{{selectRepresentation}} de representation des notes</h1>
+    <div class="flex gap-4 ml-auto">
+      <mat-button-toggle-group #group="matButtonToggleGroup" class="!rounded-lg"
+        (change)="onRepresentationChange(group.value)" name="listRepresentation" aria-label="Font Style">
+        <mat-button-toggle value="Table">Table</mat-button-toggle>
+        <mat-button-toggle value="Liste">Liste</mat-button-toggle>
+      </mat-button-toggle-group>
+      <div class="btnAjout">
+        <a routerLink="/exercise/{{currentAssignment?._id}}/note/new">
+          <button mat-flat-button color="accent">
+            <mat-icon matListItemIcon class="item-icon">add</mat-icon>
+            Nouvelle note
+          </button>
+        </a>
+      </div>
     </div>
   </div>
   <div class="p-4">
+    @if(selectRepresentation == "Table"){
     <table mat-table [dataSource]="notes" class="mat-elevation-z8 demo-table">
       <!-- Matricule Column -->
       <ng-container matColumnDef="matricule">
@@ -76,5 +84,27 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    }@else{
+    <div class="flex flex-wrap justify-center gap-4">
+      @for (note of notes; track note){
+      <a routerLink="/exercise/{{currentAssignment?._id}}/notes/{{note.matricule}}/edit">
+        <mat-card
+          class="min-w-36 example-card text-white {{(note?.note || 0) > 9 ? 'mat-card-moyenne' : 'mat-card-under-moyenne' }}">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>{{note?.note}} / 20</mat-card-title>
+              <mat-card-subtitle class="!text-white">{{note?.nom}}</mat-card-subtitle>
+              <!-- <img mat-card-sm-image
+                [src]="subject?.imgProf || 'https://angular-academy.s3.amazonaws.com/angular-university-logo-and-letters.png'"> -->
+            </mat-card-title-group>
+          </mat-card-header>
+          <mat-card-content>
+            {{note.matricule}}
+          </mat-card-content>
+        </mat-card>
+      </a>
+      }
+    </div>
+    }
   </div>
 </div>

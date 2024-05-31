@@ -1,16 +1,24 @@
 <div class="flex flex-col gap-3">
   <div class="p-4 flex">
-    <h1 class="font-bold">Table de representation des matières</h1>
-    <div class="btnAjout ml-auto">
-      <a routerLink="/subject/add">
-        <button mat-flat-button color="accent">
-          <mat-icon matListItemIcon class="item-icon">add</mat-icon>
-          Ajouter Matière
-        </button>
-      </a>
+    <h1 class="font-bold">{{selectRepresentation}} de representation des matières</h1>
+    <div class="flex gap-4 ml-auto">
+      <mat-button-toggle-group #group="matButtonToggleGroup" class="!rounded-lg"
+        (change)="onRepresentationChange(group.value)" name="listRepresentation" aria-label="Font Style">
+        <mat-button-toggle value="Table">Table</mat-button-toggle>
+        <mat-button-toggle value="Liste">Liste</mat-button-toggle>
+      </mat-button-toggle-group>
+      <div class="btnAjout">
+        <a routerLink="/subject/add">
+          <button mat-flat-button color="accent">
+            <mat-icon matListItemIcon class="item-icon">add</mat-icon>
+            Ajouter Matière
+          </button>
+        </a>
+      </div>
     </div>
   </div>
   <div class="p-4">
+    @if(selectRepresentation == "Table"){
     <table mat-table [dataSource]="subjects" class="mat-elevation-z8 demo-table">
       <!-- Label Column -->
       <ng-container matColumnDef="label">
@@ -27,9 +35,9 @@
 
       <!-- image du prof Column -->
       <!-- <ng-container matColumnDef="imgProf">
-        <th mat-header-cell *matHeaderCellDef>Image Prof</th>
-        <td mat-cell *matCellDef="let a">{{ a.imgProf }}</td>
-      </ng-container> -->
+          <th mat-header-cell *matHeaderCellDef>Image Prof</th>
+          <td mat-cell *matCellDef="let a">{{ a.imgProf }}</td>
+        </ng-container> -->
       <!-- image du prof Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef class="!text-center">Actions</th>
@@ -52,6 +60,27 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    }@else{
+    <div class="flex flex-wrap justify-center gap-4">
+      @for (subject of subjects; track subject){
+      <a routerLink="/subject/{{subject?._id}}/edit">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>{{subject?.nomProf}}</mat-card-title>
+              <mat-card-subtitle>{{subject?.label}}</mat-card-subtitle>
+              <img mat-card-sm-image
+                [src]="subject?.imgProf || 'https://angular-academy.s3.amazonaws.com/angular-university-logo-and-letters.png'">
+            </mat-card-title-group>
+          </mat-card-header>
+          <mat-card-content>
+            {{subject?.label}}
+          </mat-card-content>
+        </mat-card>
+      </a>
+      }
+    </div>
+    }
 
     <mat-paginator (page)="handlePageEvent($event)" [length]="totalDocs" [pageSize]="limit"
       [showFirstLastButtons]="true" [pageSizeOptions]="[1, 2, 5]" [pageIndex]="page" aria-label="Select page">

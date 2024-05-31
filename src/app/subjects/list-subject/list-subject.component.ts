@@ -10,6 +10,9 @@ import { DeleteModalComponent } from '../../delete-modal/delete-modal.component'
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+
 @Component({
   selector: 'app-list-subject',
   standalone: true,
@@ -20,7 +23,9 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatCardModule
   ],
   templateUrl: './list-subject.component.html',
   styleUrl: './list-subject.component.css'
@@ -38,7 +43,13 @@ export class ListSubjectComponent {
   hasNextPage?: number
   hasPrevPage?: number
   pagingCounter?: number
+  selectRepresentation: "Table" | "Liste" = "Table";
 
+  onRepresentationChange(represent: "Table" | "Liste") {
+    console.log("represent ", represent);
+
+    this.selectRepresentation = represent
+  }
   handlePageEvent(event: PageEvent) {
     this.page = event.pageIndex;
     this.limit = event.pageSize;

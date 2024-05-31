@@ -6,7 +6,7 @@
   <app-internal-server *ngSwitchCase="Layouts.InternalServer"></app-internal-server>
   <app-unauthorized *ngSwitchCase="Layouts.Unauthorized"></app-unauthorized>
   <ng-container *ngSwitchDefault>
-    <!-- <app-toolbar class="toolbar" (open)="open()"></app-toolbar> -->
+    <app-toolbar class="toolbar" (open)="open()"></app-toolbar>
     <mat-drawer-container class="h-[100vh]">
       <mat-drawer class="sidenav-container" mode="side" [opened]="opened">
         <app-sidenav></app-sidenav>

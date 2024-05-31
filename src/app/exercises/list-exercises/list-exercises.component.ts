@@ -10,7 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteModalComponent } from '../../delete-modal/delete-modal.component';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-list-exercises',
@@ -22,7 +23,9 @@ import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatCardModule
   ],
   templateUrl: './list-exercises.component.html',
   styleUrl: './list-exercises.component.css'
@@ -40,7 +43,13 @@ export class ListExercisesComponent {
   hasNextPage?: number
   hasPrevPage?: number
   pagingCounter?: number
+  selectRepresentation: "Table" | "Liste" = "Table";
 
+  onRepresentationChange(represent: "Table" | "Liste") {
+    console.log("represent ", represent);
+
+    this.selectRepresentation = represent
+  }
   constructor(
     private exerciseService: ExerciseService,
     private dialog: MatDialog,

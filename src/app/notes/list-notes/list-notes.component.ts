@@ -11,7 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Exercise } from '../../exercises/exercise.model';
 import { NoteService } from '../../services/note/note.service';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-list-notes',
@@ -22,7 +23,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTable,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonToggleModule,
+    MatCardModule
   ],
   templateUrl: './list-notes.component.html',
   styleUrl: './list-notes.component.css'
@@ -31,6 +34,13 @@ export class ListNotesComponent {
   displayedColumns: string[] = [];
   notes: Note[] = [];
   currentAssignment?: Exercise;
+  selectRepresentation: "Table" | "Liste" = "Table";
+
+  onRepresentationChange(represent: "Table" | "Liste") {
+    console.log("represent ", represent);
+
+    this.selectRepresentation = represent
+  }
 
   constructor(
     private exerciseService: ExerciseService,
