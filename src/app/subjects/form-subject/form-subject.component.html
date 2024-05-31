@@ -5,6 +5,14 @@
   </div>
   <div class="w-full h-full justify-center p-4">
     <form class="flex flex-col" [formGroup]="subjectForm" (ngSubmit)="onSubmitForm()">
+      <div class="mb-4">
+        @if(blobUrl || subjectValue?.imgProf){
+        <img class="w-[60px] h-[60px] mb-2 rounded-full" [src]="blobUrl || subjectValue?.imgProf"
+          alt="Description de l'image">
+        }
+        <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+        <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+      </div>
       <mat-form-field>
         <mat-label>Libellé</mat-label>
         <input matInput placeholder="Grails" formControlName="label" required type="text" />
@@ -19,13 +27,13 @@
           {{ getNomProfErrorMessage()}}
         </mat-error>
       </mat-form-field>
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-label>image du professeur</mat-label>
         <input matInput placeholder="http://localhost/azertyuiop" formControlName="imgProf" required type="text" />
         <mat-error *ngIf="subjectForm.get('imgProf')?.invalid">
           {{ getImageErrorMessage()}}
         </mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
       <div>
         <button [disabled]="!subjectForm.valid" mat-raised-button color="primary" ripple>
           <div class="flex gap-3">

@@ -33,4 +33,11 @@ export class SubjectService {
   delete(args: ArgsSubjectDeleteTypes): Observable<any> {
     return this.http.delete(`${environment?.apiUrl}/subject/${args?._id}`);
   }
+
+  upload(args: { image: Blob }) {
+    const formData = new FormData();
+    formData.append('files', args?.image);
+    console.log("args?.image ", args?.image);
+    return this.http.post(`${environment?.apiUrl}/upload_files`, formData, {});
+  }
 }
